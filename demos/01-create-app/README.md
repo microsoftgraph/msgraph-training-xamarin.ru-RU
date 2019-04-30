@@ -1,0 +1,3 @@
+# <a name="completed-module-create-a-xamarin-app"></a>Завершенный модуль: создание приложения Xamarin
+
+Версия проекта в этом каталоге отражает выполнение руководства с помощью [создания приложения Xamarin](https://docs.microsoft.com/graph/tutorials/xamarin?tutorial-step=1). Если вы используете эту версию проекта, вам необходимо выполнить все остальные руководства, начиная с [регистрации приложения на портале](https://docs.microsoft.com/graph/tutorials/xamarin?tutorial-step=2).
