@@ -1,38 +1,37 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-<span data-ttu-id="f30ff-101">Откройте Visual Studio и выберите **файл _Гт_ создать проект _гт_**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-101">Open Visual Studio, and select **File > New > Project**.</span></span> <span data-ttu-id="f30ff-102">В диалоговом окне **Новый проект** выполните следующие действия:</span><span class="sxs-lookup"><span data-stu-id="f30ff-102">In the **New Project** dialog, do the following:</span></span>
+<span data-ttu-id="e2a67-101">Откройте Visual Studio и выберите **создать новый проект**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-101">Open Visual Studio, and select **Create a new project**.</span></span> <span data-ttu-id="e2a67-102">В диалоговом окне **Создание нового проекта** выберите **мобильные приложения (Xamarin. Forms)**, а затем нажмите кнопку **Далее**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-102">In the **Create a new project** dialog, choose **Mobile App (Xamarin.Forms)**, then choose **Next**.</span></span>
 
-1. <span data-ttu-id="f30ff-103">Выберите **_гт_ на нескольких платформах Visual C#**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-103">Select **Visual C# > Cross-Platform**.</span></span>
-1. <span data-ttu-id="f30ff-104">Выберите **мобильНое приложение (Xamarin. Forms)**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-104">Select **Mobile App (Xamarin.Forms)**.</span></span>
-1. <span data-ttu-id="f30ff-105">Введите **графтуториал** в качестве имени проекта.</span><span class="sxs-lookup"><span data-stu-id="f30ff-105">Enter **GraphTutorial** for the Name of the project.</span></span>
+![Visual Studio 2019 диалоговое окно создания нового проекта](images/new-project-dialog.png)
 
-![Visual Studio 2017 диалоговое окно создания нового проекта](images/new-project-dialog.png)
+<span data-ttu-id="e2a67-104">В диалоговом окне **Настройка нового проекта** введите `GraphTutorial` **имя проекта** и **имя решения**, а затем нажмите кнопку **создать**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-104">In the **Configure a new project** dialog, enter `GraphTutorial` for the **Project name** and **Solution name**, then choose **Create**.</span></span>
 
 > [!IMPORTANT]
-> <span data-ttu-id="f30ff-107">Убедитесь, что вы вводите точно такое же имя для проекта Visual Studio, которое указано в этих инструкциях лаборатории.</span><span class="sxs-lookup"><span data-stu-id="f30ff-107">Ensure that you enter the exact same name for the Visual Studio Project that is specified in these lab instructions.</span></span> <span data-ttu-id="f30ff-108">Имя проекта Visual Studio становится частью пространства имен в коде.</span><span class="sxs-lookup"><span data-stu-id="f30ff-108">The Visual Studio Project name becomes part of the namespace in the code.</span></span> <span data-ttu-id="f30ff-109">Код в этих инструкциях зависит от пространства имен, которое соответствует имени проекта Visual Studio, указанного в данных инструкциях.</span><span class="sxs-lookup"><span data-stu-id="f30ff-109">The code inside these instructions depends on the namespace matching the Visual Studio Project name specified in these instructions.</span></span> <span data-ttu-id="f30ff-110">Если вы используете другое имя проекта, код не будет компилироваться, если не настроить все пространства имен в качестве имени проекта Visual Studio, вводимого при создании проекта.</span><span class="sxs-lookup"><span data-stu-id="f30ff-110">If you use a different project name the code will not compile unless you adjust all the namespaces to match the Visual Studio Project name you enter when you create the project.</span></span>
+> <span data-ttu-id="e2a67-105">Убедитесь, что вы вводите точно такое же имя для проекта Visual Studio, которое указано в этих инструкциях лаборатории.</span><span class="sxs-lookup"><span data-stu-id="e2a67-105">Ensure that you enter the exact same name for the Visual Studio Project that is specified in these lab instructions.</span></span> <span data-ttu-id="e2a67-106">Имя проекта Visual Studio становится частью пространства имен в коде.</span><span class="sxs-lookup"><span data-stu-id="e2a67-106">The Visual Studio Project name becomes part of the namespace in the code.</span></span> <span data-ttu-id="e2a67-107">Код в этих инструкциях зависит от пространства имен, которое соответствует имени проекта Visual Studio, указанного в данных инструкциях.</span><span class="sxs-lookup"><span data-stu-id="e2a67-107">The code inside these instructions depends on the namespace matching the Visual Studio Project name specified in these instructions.</span></span> <span data-ttu-id="e2a67-108">Если вы используете другое имя проекта, код не будет компилироваться, если не настроить все пространства имен в качестве имени проекта Visual Studio, вводимого при создании проекта.</span><span class="sxs-lookup"><span data-stu-id="e2a67-108">If you use a different project name the code will not compile unless you adjust all the namespaces to match the Visual Studio Project name you enter when you create the project.</span></span>
 
-<span data-ttu-id="f30ff-111">Нажмите кнопку **ОК**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-111">Select **OK**.</span></span> <span data-ttu-id="f30ff-112">В диалоговом окне **Создание ПерекрестНой платформы** выберите **пустой** шаблон и убедитесь, что выбрана **стратегия общего доступа к коду** **.NET Standard**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-112">In the **New Cross Platform App** dialog, select the **Blank** template, and ensure that the **Code Sharing Strategy** selection is **.NET Standard**.</span></span> <span data-ttu-id="f30ff-113">Если вы планируете пропустить определенную платформу, вы можете отменить выбор этого параметра в разделе **платформы**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-113">If you plan to skip a specific platform, you can unselect it now under **Platforms**.</span></span> <span data-ttu-id="f30ff-114">Нажмите кнопку **ОК** , чтобы создать решение.</span><span class="sxs-lookup"><span data-stu-id="f30ff-114">Select **OK** to create the solution.</span></span>
+![Visual Studio 2019 Настройка диалогового окна "создать проект"](images/configure-new-project-dialog.png)
 
-![Диалоговое окно Visual Studio 2017 New Cross Platform App](images/new-cross-platform-app-dialog.png)
+<span data-ttu-id="e2a67-110">В диалоговом окне **Создание многоплатформенного приложения** выберите **пустой** шаблон и выберите платформы, которые необходимо создать на **платформе**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-110">In the **New Cross Platform App** dialog, select the **Blank** template, and select the platforms you want to build under **Platforms**.</span></span> <span data-ttu-id="e2a67-111">Нажмите кнопку **ОК** , чтобы создать решение.</span><span class="sxs-lookup"><span data-stu-id="e2a67-111">Select **OK** to create the solution.</span></span>
 
-<span data-ttu-id="f30ff-116">Прежде чем переходить, установите некоторые дополнительные пакеты NuGet, которые будут использоваться позже.</span><span class="sxs-lookup"><span data-stu-id="f30ff-116">Before moving on, install some additional NuGet packages that you will use later.</span></span>
+![Диалоговое окно Visual Studio 2019 New Cross Platform App](images/new-cross-platform-app-dialog.png)
 
-- <span data-ttu-id="f30ff-117">[Microsoft. Identity. Client](https://www.nuget.org/packages/Microsoft.Identity.Client/) для обработки проверки подлинности и управления маркерами Azure AD.</span><span class="sxs-lookup"><span data-stu-id="f30ff-117">[Microsoft.Identity.Client](https://www.nuget.org/packages/Microsoft.Identity.Client/) to handle Azure AD authentication and token management.</span></span>
-- <span data-ttu-id="f30ff-118">[Microsoft. Graph](https://www.nuget.org/packages/Microsoft.Graph/) для совершения вызовов в Microsoft Graph.</span><span class="sxs-lookup"><span data-stu-id="f30ff-118">[Microsoft.Graph](https://www.nuget.org/packages/Microsoft.Graph/) for making calls to the Microsoft Graph.</span></span>
+<span data-ttu-id="e2a67-113">Прежде чем переходить, установите некоторые дополнительные пакеты NuGet, которые будут использоваться позже.</span><span class="sxs-lookup"><span data-stu-id="e2a67-113">Before moving on, install some additional NuGet packages that you will use later.</span></span>
 
-<span data-ttu-id="f30ff-119">Выберите **инструменты _Гт_ диспетчера пакетов NuGet _Гт_ консоли диспетчера пакетов**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-119">Select **Tools > NuGet Package Manager > Package Manager Console**.</span></span> <span data-ttu-id="f30ff-120">В консоли диспетчера пакетов введите указанные ниже команды.</span><span class="sxs-lookup"><span data-stu-id="f30ff-120">In the Package Manager Console, enter the following commands.</span></span>
+- <span data-ttu-id="e2a67-114">[Microsoft. Identity. Client](https://www.nuget.org/packages/Microsoft.Identity.Client/) для обработки проверки подлинности и управления маркерами Azure AD.</span><span class="sxs-lookup"><span data-stu-id="e2a67-114">[Microsoft.Identity.Client](https://www.nuget.org/packages/Microsoft.Identity.Client/) to handle Azure AD authentication and token management.</span></span>
+- <span data-ttu-id="e2a67-115">[Microsoft. Graph](https://www.nuget.org/packages/Microsoft.Graph/) для совершения вызовов в Microsoft Graph.</span><span class="sxs-lookup"><span data-stu-id="e2a67-115">[Microsoft.Graph](https://www.nuget.org/packages/Microsoft.Graph/) for making calls to the Microsoft Graph.</span></span>
+
+<span data-ttu-id="e2a67-116">Выберите **инструменты _Гт_ диспетчера пакетов NuGet _Гт_ консоли диспетчера пакетов**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-116">Select **Tools > NuGet Package Manager > Package Manager Console**.</span></span> <span data-ttu-id="e2a67-117">В консоли диспетчера пакетов введите указанные ниже команды.</span><span class="sxs-lookup"><span data-stu-id="e2a67-117">In the Package Manager Console, enter the following commands.</span></span>
 
 ```Powershell
-Install-Package Microsoft.Identity.Client -Version 2.7.0 -Project GraphTutorial
-Install-Package Xamarin.Android.Support.Compat -Version 27.0.2.1 -Project GraphTutorial.Android
-Install-Package Microsoft.Identity.Client -Version 2.7.0 -Project GraphTutorial.Android
-Install-Package Microsoft.Identity.Client -Version 2.7.0 -Project GraphTutorial.iOS
-Install-Package Microsoft.Graph -Version 1.12.0 -Project GraphTutorial
+Install-Package Microsoft.Identity.Client -Version 3.0.8 -Project GraphTutorial
+Install-Package Microsoft.Identity.Client -Version 3.0.8 -Project GraphTutorial.Android
+Install-Package Microsoft.Identity.Client -Version 3.0.8 -Project GraphTutorial.iOS
+Install-Package Microsoft.Graph -Version 1.15.0 -Project GraphTutorial
 ```
 
-## <a name="design-the-app"></a><span data-ttu-id="f30ff-121">Проектирование приложения</span><span class="sxs-lookup"><span data-stu-id="f30ff-121">Design the app</span></span>
+## <a name="design-the-app"></a><span data-ttu-id="e2a67-118">Проектирование приложения</span><span class="sxs-lookup"><span data-stu-id="e2a67-118">Design the app</span></span>
 
-<span data-ttu-id="f30ff-122">Сначала обновите `App` класс, чтобы добавить переменные для отслеживания состояния проверки подлинности и вошедшего пользователя.</span><span class="sxs-lookup"><span data-stu-id="f30ff-122">Start by updating the `App` class to add variables to track the authentication state and the signed-in user.</span></span> <span data-ttu-id="f30ff-123">В **обозревателе решений**разверните проект **графтуториал** , а затем разверните файл **app. XAML** .</span><span class="sxs-lookup"><span data-stu-id="f30ff-123">In **Solution Explorer**, expand the **GraphTutorial** project, then expand the **App.xaml** file.</span></span> <span data-ttu-id="f30ff-124">Откройте файл **app.XAML.CS** и добавьте приведенные ниже `using` операторы в начало файла.</span><span class="sxs-lookup"><span data-stu-id="f30ff-124">Open the **App.xaml.cs** file and add the following `using` statements to the top of the file.</span></span>
+<span data-ttu-id="e2a67-119">Сначала обновите `App` класс, чтобы добавить переменные для отслеживания состояния проверки подлинности и вошедшего пользователя.</span><span class="sxs-lookup"><span data-stu-id="e2a67-119">Start by updating the `App` class to add variables to track the authentication state and the signed-in user.</span></span> <span data-ttu-id="e2a67-120">В **обозревателе решений**разверните проект **графтуториал** , а затем разверните файл **app. XAML** .</span><span class="sxs-lookup"><span data-stu-id="e2a67-120">In **Solution Explorer**, expand the **GraphTutorial** project, then expand the **App.xaml** file.</span></span> <span data-ttu-id="e2a67-121">Откройте файл **app.XAML.CS** и добавьте приведенные ниже `using` операторы в начало файла.</span><span class="sxs-lookup"><span data-stu-id="e2a67-121">Open the **App.xaml.cs** file and add the following `using` statements to the top of the file.</span></span>
 
 ```cs
 using System.ComponentModel;
@@ -41,13 +40,13 @@ using System.Reflection;
 using System.Threading.Tasks;
 ```
 
-<span data-ttu-id="f30ff-125">Затем добавьте `INotifyPropertyChanged` интерфейс к объявлению класса.</span><span class="sxs-lookup"><span data-stu-id="f30ff-125">Next, add the `INotifyPropertyChanged` interface to the class declaration.</span></span>
+<span data-ttu-id="e2a67-122">Затем добавьте `INotifyPropertyChanged` интерфейс к объявлению класса.</span><span class="sxs-lookup"><span data-stu-id="e2a67-122">Next, add the `INotifyPropertyChanged` interface to the class declaration.</span></span>
 
 ```cs
 public partial class App : Application, INotifyPropertyChanged
 ```
 
-<span data-ttu-id="f30ff-126">Теперь добавьте в `App` класс указанные ниже свойства.</span><span class="sxs-lookup"><span data-stu-id="f30ff-126">Now add the following properties to the `App` class.</span></span>
+<span data-ttu-id="e2a67-123">Теперь добавьте в `App` класс указанные ниже свойства.</span><span class="sxs-lookup"><span data-stu-id="e2a67-123">Now add the following properties to the `App` class.</span></span>
 
 ```cs
 // Is a user signed in?
@@ -102,7 +101,7 @@ public ImageSource UserPhoto
 }
 ```
 
-<span data-ttu-id="f30ff-127">Теперь добавьте в `App` класс следующие функции.</span><span class="sxs-lookup"><span data-stu-id="f30ff-127">Now add the following functions to the `App` class.</span></span> <span data-ttu-id="f30ff-128">Функции `SignIn`, `SignOut`и, `GetUserInfo` а также — это просто заполнители.</span><span class="sxs-lookup"><span data-stu-id="f30ff-128">The `SignIn`, `SignOut`, and `GetUserInfo` functions are just placeholders for now.</span></span>
+<span data-ttu-id="e2a67-124">Теперь добавьте в `App` класс следующие функции.</span><span class="sxs-lookup"><span data-stu-id="e2a67-124">Now add the following functions to the `App` class.</span></span> <span data-ttu-id="e2a67-125">Функции `SignIn`, `SignOut`и, `GetUserInfo` а также — это просто заполнители.</span><span class="sxs-lookup"><span data-stu-id="e2a67-125">The `SignIn`, `SignOut`, and `GetUserInfo` functions are just placeholders for now.</span></span>
 
 ```cs
 public async Task SignIn()
@@ -134,15 +133,15 @@ private Stream GetUserPhoto()
 }
 ```
 
-<span data-ttu-id="f30ff-129">`GetUserPhoto` Функция возвращает фотографию, используемую по умолчанию.</span><span class="sxs-lookup"><span data-stu-id="f30ff-129">The `GetUserPhoto` function returns a default photo for now.</span></span> <span data-ttu-id="f30ff-130">Вы можете указать собственный файл здесь или скачать его, использованный в примере, на сайте [GitHub](https://github.com/microsoftgraph/msgraph-training-xamarin/blob/master/tutorial/images/no-profile-pic.png).</span><span class="sxs-lookup"><span data-stu-id="f30ff-130">You can either supply your own file here, or you can download the one used in the sample from [GitHub](https://github.com/microsoftgraph/msgraph-training-xamarin/blob/master/tutorial/images/no-profile-pic.png).</span></span> <span data-ttu-id="f30ff-131">Скопируйте файл в `./GraphTutorial/GraphTutorial` каталог.</span><span class="sxs-lookup"><span data-stu-id="f30ff-131">Copy the file to the `./GraphTutorial/GraphTutorial` directory.</span></span> <span data-ttu-id="f30ff-132">Щелкните правой кнопкой мыши проект **графтуториал** в **обозревателе решений** и выберите команду **добавить**, а затем **существующий элемент...**. Выберите `no-profile-pic.png` файл и нажмите кнопку **Добавить**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-132">Right-click the **GraphTutorial** project in **Solution Explorer** and choose **Add**, then **Existing Item...**. Select the `no-profile-pic.png` file and choose **Add**.</span></span> <span data-ttu-id="f30ff-133">Теперь щелкните правой кнопкой мыши файл в **обозревателе решений** и выберите пункт **свойства**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-133">Now right-click the file in **Solution Explorer** and choose **Properties**.</span></span> <span data-ttu-id="f30ff-134">В окне **Свойства** измените значение **действия** при построении на внедренный **ресурс**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-134">In the **Properties** window, change the value of **Build Action** to **Embedded resource**.</span></span>
+<span data-ttu-id="e2a67-126">`GetUserPhoto` Функция возвращает фотографию, используемую по умолчанию.</span><span class="sxs-lookup"><span data-stu-id="e2a67-126">The `GetUserPhoto` function returns a default photo for now.</span></span> <span data-ttu-id="e2a67-127">Вы можете указать собственный файл здесь или скачать его, использованный в примере, на сайте [GitHub](https://github.com/microsoftgraph/msgraph-training-xamarin/blob/master/tutorial/images/no-profile-pic.png).</span><span class="sxs-lookup"><span data-stu-id="e2a67-127">You can either supply your own file here, or you can download the one used in the sample from [GitHub](https://github.com/microsoftgraph/msgraph-training-xamarin/blob/master/tutorial/images/no-profile-pic.png).</span></span> <span data-ttu-id="e2a67-128">Скопируйте файл в `./GraphTutorial/GraphTutorial` каталог.</span><span class="sxs-lookup"><span data-stu-id="e2a67-128">Copy the file to the `./GraphTutorial/GraphTutorial` directory.</span></span> <span data-ttu-id="e2a67-129">Щелкните правой кнопкой мыши проект **графтуториал** в **обозревателе решений** и выберите команду **добавить**, а затем **существующий элемент...**. Выберите `no-profile-pic.png` файл и нажмите кнопку **Добавить**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-129">Right-click the **GraphTutorial** project in **Solution Explorer** and choose **Add**, then **Existing Item...**. Select the `no-profile-pic.png` file and choose **Add**.</span></span> <span data-ttu-id="e2a67-130">Теперь щелкните правой кнопкой мыши файл в **обозревателе решений** и выберите пункт **свойства**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-130">Now right-click the file in **Solution Explorer** and choose **Properties**.</span></span> <span data-ttu-id="e2a67-131">В окне **Свойства** измените значение **действия** при построении на внедренный **ресурс**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-131">In the **Properties** window, change the value of **Build Action** to **Embedded resource**.</span></span>
 
 ![Снимок экрана: окно "Свойства" для PNG-файла](./images/png-file-properties.png)
 
-### <a name="app-navigation"></a><span data-ttu-id="f30ff-136">Навигация в приложении</span><span class="sxs-lookup"><span data-stu-id="f30ff-136">App navigation</span></span>
+### <a name="app-navigation"></a><span data-ttu-id="e2a67-133">Навигация в приложении</span><span class="sxs-lookup"><span data-stu-id="e2a67-133">App navigation</span></span>
 
-<span data-ttu-id="f30ff-137">Затем замените основную страницу приложения на [страницу "основной-подробности](/xamarin/xamarin-forms/app-fundamentals/navigation/master-detail-page)".</span><span class="sxs-lookup"><span data-stu-id="f30ff-137">Next, change the application's main page to a [Master-Detail page](/xamarin/xamarin-forms/app-fundamentals/navigation/master-detail-page).</span></span> <span data-ttu-id="f30ff-138">Откроется меню навигации, чтобы переключиться между представлениями в приложении.</span><span class="sxs-lookup"><span data-stu-id="f30ff-138">This will provide a navigation menu to switch between view in the app.</span></span>
+<span data-ttu-id="e2a67-134">Затем замените основную страницу приложения на [страницу "основной-подробности](/xamarin/xamarin-forms/app-fundamentals/navigation/master-detail-page)".</span><span class="sxs-lookup"><span data-stu-id="e2a67-134">Next, change the application's main page to a [Master-Detail page](/xamarin/xamarin-forms/app-fundamentals/navigation/master-detail-page).</span></span> <span data-ttu-id="e2a67-135">Откроется меню навигации, чтобы переключиться между представлениями в приложении.</span><span class="sxs-lookup"><span data-stu-id="e2a67-135">This will provide a navigation menu to switch between view in the app.</span></span>
 
-<span data-ttu-id="f30ff-139">Откройте файл **MainPage. XAML** в проекте **графтуториал** и замените его содержимое приведенным ниже кодом.</span><span class="sxs-lookup"><span data-stu-id="f30ff-139">Open the **MainPage.xaml** file in the **GraphTutorial** project and replace its contents with the following.</span></span>
+<span data-ttu-id="e2a67-136">Откройте файл **MainPage. XAML** в проекте **графтуториал** и замените его содержимое приведенным ниже кодом.</span><span class="sxs-lookup"><span data-stu-id="e2a67-136">Open the **MainPage.xaml** file in the **GraphTutorial** project and replace its contents with the following.</span></span>
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -166,11 +165,11 @@ private Stream GetUserPhoto()
 </MasterDetailPage>
 ```
 
-#### <a name="implement-the-menu"></a><span data-ttu-id="f30ff-140">Реализация меню</span><span class="sxs-lookup"><span data-stu-id="f30ff-140">Implement the menu</span></span>
+#### <a name="implement-the-menu"></a><span data-ttu-id="e2a67-137">Реализация меню</span><span class="sxs-lookup"><span data-stu-id="e2a67-137">Implement the menu</span></span>
 
-<span data-ttu-id="f30ff-141">Начните с создания модели для представления элементов меню.</span><span class="sxs-lookup"><span data-stu-id="f30ff-141">Start by creating a model to represent the menu items.</span></span> <span data-ttu-id="f30ff-142">Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **Новая папка**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-142">Right-click the **GraphTutorial** project and choose **Add**, then **New Folder**.</span></span> <span data-ttu-id="f30ff-143">НаЗовите папку `Models`.</span><span class="sxs-lookup"><span data-stu-id="f30ff-143">Name the folder `Models`.</span></span>
+<span data-ttu-id="e2a67-138">Начните с создания модели для представления элементов меню.</span><span class="sxs-lookup"><span data-stu-id="e2a67-138">Start by creating a model to represent the menu items.</span></span> <span data-ttu-id="e2a67-139">Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **Новая папка**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-139">Right-click the **GraphTutorial** project and choose **Add**, then **New Folder**.</span></span> <span data-ttu-id="e2a67-140">Назовите папку `Models`.</span><span class="sxs-lookup"><span data-stu-id="e2a67-140">Name the folder `Models`.</span></span>
 
-<span data-ttu-id="f30ff-144">Щелкните правой кнопкой мыши \*\*\*\* папку Models и выберите команду **Добавить**, а затем **класс...**. НаЗовите класс `NavMenuItem` и нажмите кнопку **Добавить**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-144">Right-click the **Models** folder and choose **Add**, then **Class...**. Name the class `NavMenuItem` and choose **Add**.</span></span> <span data-ttu-id="f30ff-145">Откройте файл **NavMenuItem.CS** и замените его содержимое на приведенный ниже код.</span><span class="sxs-lookup"><span data-stu-id="f30ff-145">Open the **NavMenuItem.cs** file and replace its contents with the following.</span></span>
+<span data-ttu-id="e2a67-141">Щелкните правой кнопкой мыши \*\*\*\* папку Models и выберите команду **Добавить**, а затем **класс...**. Назовите класс `NavMenuItem` и нажмите кнопку **Добавить**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-141">Right-click the **Models** folder and choose **Add**, then **Class...**. Name the class `NavMenuItem` and choose **Add**.</span></span> <span data-ttu-id="e2a67-142">Откройте файл **NavMenuItem.CS** и замените его содержимое на приведенный ниже код.</span><span class="sxs-lookup"><span data-stu-id="e2a67-142">Open the **NavMenuItem.cs** file and replace its contents with the following.</span></span>
 
 ```cs
 namespace GraphTutorial.Models
@@ -190,7 +189,7 @@ namespace GraphTutorial.Models
 }
 ```
 
-<span data-ttu-id="f30ff-146">Теперь добавьте страницу меню.</span><span class="sxs-lookup"><span data-stu-id="f30ff-146">Now add the menu page.</span></span> <span data-ttu-id="f30ff-147">Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **новый элемент...**. Выберите **страницу содержимого** и присвойте странице `MenuPage`имя.</span><span class="sxs-lookup"><span data-stu-id="f30ff-147">Right-click the **GraphTutorial** project and select **Add**, then **New Item...**. Choose **Content Page** and name the page `MenuPage`.</span></span> <span data-ttu-id="f30ff-148">Нажмите кнопку **Добавить**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-148">Choose **Add**.</span></span> <span data-ttu-id="f30ff-149">Откройте файл **менупаже. XAML** и замените его содержимое приведенным ниже кодом.</span><span class="sxs-lookup"><span data-stu-id="f30ff-149">Open the **MenuPage.xaml** file and replace its contents with the following.</span></span>
+<span data-ttu-id="e2a67-143">Теперь добавьте страницу меню.</span><span class="sxs-lookup"><span data-stu-id="e2a67-143">Now add the menu page.</span></span> <span data-ttu-id="e2a67-144">Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **новый элемент...**. Выберите **страницу содержимого** и присвойте странице `MenuPage`имя.</span><span class="sxs-lookup"><span data-stu-id="e2a67-144">Right-click the **GraphTutorial** project and select **Add**, then **New Item...**. Choose **Content Page** and name the page `MenuPage`.</span></span> <span data-ttu-id="e2a67-145">Нажмите кнопку **Добавить**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-145">Choose **Add**.</span></span> <span data-ttu-id="e2a67-146">Откройте файл **менупаже. XAML** и замените его содержимое приведенным ниже кодом.</span><span class="sxs-lookup"><span data-stu-id="e2a67-146">Open the **MenuPage.xaml** file and replace its contents with the following.</span></span>
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -256,7 +255,7 @@ namespace GraphTutorial.Models
 </ContentPage>
 ```
 
-<span data-ttu-id="f30ff-150">Теперь разверните **менупаже. XAML** в **обозревателе решений** и откройте файл **MenuPage.XAML.CS** .</span><span class="sxs-lookup"><span data-stu-id="f30ff-150">Now, expand **MenuPage.xaml** in **Solution Explorer** and open the **MenuPage.xaml.cs** file.</span></span> <span data-ttu-id="f30ff-151">Замените его содержимое приведенным ниже.</span><span class="sxs-lookup"><span data-stu-id="f30ff-151">Replace its contents with the following.</span></span>
+<span data-ttu-id="e2a67-147">Теперь разверните **менупаже. XAML** в **обозревателе решений** и откройте файл **MenuPage.XAML.CS** .</span><span class="sxs-lookup"><span data-stu-id="e2a67-147">Now, expand **MenuPage.xaml** in **Solution Explorer** and open the **MenuPage.xaml.cs** file.</span></span> <span data-ttu-id="e2a67-148">Замените его содержимое приведенным ниже.</span><span class="sxs-lookup"><span data-stu-id="e2a67-148">Replace its contents with the following.</span></span>
 
 ```cs
 using System;
@@ -275,7 +274,7 @@ namespace GraphTutorial
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MenuPage : ContentPage
     {
-        MainPage RootPage { get => Application.Current.MainPage as MainPage; }
+        MainPage RootPage => Application.Current.MainPage as MainPage;
         List<NavMenuItem> menuItems;
 
         public MenuPage ()
@@ -322,9 +321,12 @@ namespace GraphTutorial
 }
 ```
 
-#### <a name="implement-the-welcome-page"></a><span data-ttu-id="f30ff-152">Реализация страницы приветствия</span><span class="sxs-lookup"><span data-stu-id="f30ff-152">Implement the welcome page</span></span>
+> [!NOTE]
+> <span data-ttu-id="e2a67-149">Visual Studio сообщит об ошибках в **MenuPage.XAML.CS**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-149">Visual Studio will report errors in **MenuPage.xaml.cs**.</span></span> <span data-ttu-id="e2a67-150">Эти ошибки будут устранены на более позднем этапе.</span><span class="sxs-lookup"><span data-stu-id="e2a67-150">These errors will be resolved in a later step.</span></span>
 
-<span data-ttu-id="f30ff-153">Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **новый элемент...**. Выберите **страницу содержимого** и присвойте странице `WelcomePage`имя.</span><span class="sxs-lookup"><span data-stu-id="f30ff-153">Right-click the **GraphTutorial** project and select **Add**, then **New Item...**. Choose **Content Page** and name the page `WelcomePage`.</span></span> <span data-ttu-id="f30ff-154">Нажмите кнопку **Добавить**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-154">Choose **Add**.</span></span> <span data-ttu-id="f30ff-155">Откройте файл **велкомепаже. XAML** и замените его содержимое приведенным ниже кодом.</span><span class="sxs-lookup"><span data-stu-id="f30ff-155">Open the **WelcomePage.xaml** file and replace its contents with the following.</span></span>
+#### <a name="implement-the-welcome-page"></a><span data-ttu-id="e2a67-151">Реализация страницы приветствия</span><span class="sxs-lookup"><span data-stu-id="e2a67-151">Implement the welcome page</span></span>
+
+<span data-ttu-id="e2a67-152">Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **новый элемент...**. Выберите **страницу содержимого** и присвойте странице `WelcomePage`имя.</span><span class="sxs-lookup"><span data-stu-id="e2a67-152">Right-click the **GraphTutorial** project and select **Add**, then **New Item...**. Choose **Content Page** and name the page `WelcomePage`.</span></span> <span data-ttu-id="e2a67-153">Нажмите кнопку **Добавить**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-153">Choose **Add**.</span></span> <span data-ttu-id="e2a67-154">Откройте файл **велкомепаже. XAML** и замените его содержимое приведенным ниже кодом.</span><span class="sxs-lookup"><span data-stu-id="e2a67-154">Open the **WelcomePage.xaml** file and replace its contents with the following.</span></span>
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -367,7 +369,7 @@ namespace GraphTutorial
 </ContentPage>
 ```
 
-<span data-ttu-id="f30ff-156">Теперь разверните **велкомепаже. XAML** в **обозревателе решений** и откройте файл **WelcomePage.XAML.CS** .</span><span class="sxs-lookup"><span data-stu-id="f30ff-156">Now, expand **WelcomePage.xaml** in **Solution Explorer** and open the **WelcomePage.xaml.cs** file.</span></span> <span data-ttu-id="f30ff-157">Добавьте к классу `WelcomePage` следующую функцию:</span><span class="sxs-lookup"><span data-stu-id="f30ff-157">Add the following function to the `WelcomePage` class.</span></span>
+<span data-ttu-id="e2a67-155">Теперь разверните **велкомепаже. XAML** в **обозревателе решений** и откройте файл **WelcomePage.XAML.CS** .</span><span class="sxs-lookup"><span data-stu-id="e2a67-155">Now, expand **WelcomePage.xaml** in **Solution Explorer** and open the **WelcomePage.xaml.cs** file.</span></span> <span data-ttu-id="e2a67-156">Добавьте к классу `WelcomePage` следующую функцию:</span><span class="sxs-lookup"><span data-stu-id="e2a67-156">Add the following function to the `WelcomePage` class.</span></span>
 
 ```cs
 private void OnSignIn(object sender, EventArgs e)
@@ -376,15 +378,15 @@ private void OnSignIn(object sender, EventArgs e)
 }
 ```
 
-#### <a name="add-calendar-page"></a><span data-ttu-id="f30ff-158">Страница "Добавление календаря"</span><span class="sxs-lookup"><span data-stu-id="f30ff-158">Add calendar page</span></span>
+#### <a name="add-calendar-page"></a><span data-ttu-id="e2a67-157">Страница "Добавление календаря"</span><span class="sxs-lookup"><span data-stu-id="e2a67-157">Add calendar page</span></span>
 
-<span data-ttu-id="f30ff-159">Теперь добавьте страницу "Календарь".</span><span class="sxs-lookup"><span data-stu-id="f30ff-159">Now add a calendar page.</span></span> <span data-ttu-id="f30ff-160">Это будет просто заполнитель.</span><span class="sxs-lookup"><span data-stu-id="f30ff-160">This will just be a placeholder for now.</span></span> <span data-ttu-id="f30ff-161">Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **новый элемент...**. Выберите **страницу содержимого** и присвойте странице `CalendarPage`имя.</span><span class="sxs-lookup"><span data-stu-id="f30ff-161">Right-click the **GraphTutorial** project and select **Add**, then **New Item...**. Choose **Content Page** and name the page `CalendarPage`.</span></span> <span data-ttu-id="f30ff-162">Нажмите кнопку **Добавить**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-162">Choose **Add**.</span></span>
+<span data-ttu-id="e2a67-158">Теперь добавьте страницу "Календарь".</span><span class="sxs-lookup"><span data-stu-id="e2a67-158">Now add a calendar page.</span></span> <span data-ttu-id="e2a67-159">Это будет просто заполнитель.</span><span class="sxs-lookup"><span data-stu-id="e2a67-159">This will just be a placeholder for now.</span></span> <span data-ttu-id="e2a67-160">Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **новый элемент...**. Выберите **страницу содержимого** и присвойте странице `CalendarPage`имя.</span><span class="sxs-lookup"><span data-stu-id="e2a67-160">Right-click the **GraphTutorial** project and select **Add**, then **New Item...**. Choose **Content Page** and name the page `CalendarPage`.</span></span> <span data-ttu-id="e2a67-161">Нажмите кнопку **Добавить**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-161">Choose **Add**.</span></span>
 
-<span data-ttu-id="f30ff-163">Оставьте добавленную страницу как есть.</span><span class="sxs-lookup"><span data-stu-id="f30ff-163">Leave the added page as-is for now.</span></span>
+<span data-ttu-id="e2a67-162">Оставьте добавленную страницу как есть.</span><span class="sxs-lookup"><span data-stu-id="e2a67-162">Leave the added page as-is for now.</span></span>
 
-#### <a name="update-mainpage-code-behind"></a><span data-ttu-id="f30ff-164">Обновление кода MainPage</span><span class="sxs-lookup"><span data-stu-id="f30ff-164">Update MainPage code-behind</span></span>
+#### <a name="update-mainpage-code-behind"></a><span data-ttu-id="e2a67-163">Обновление кода MainPage</span><span class="sxs-lookup"><span data-stu-id="e2a67-163">Update MainPage code-behind</span></span>
 
-<span data-ttu-id="f30ff-165">Теперь, когда все страницы находятся на месте, обновите код программной части для **MainPage. XAML**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-165">Now that all of the pages are in place, update the code-behind for **MainPage.xaml**.</span></span> <span data-ttu-id="f30ff-166">Разверните **MainPage. XAML** в **обозревателе решений** и откройте файл **MainPage.XAML.CS** и замените все содержимое приведенным ниже кодом.</span><span class="sxs-lookup"><span data-stu-id="f30ff-166">Expand **MainPage.xaml** in **Solution Explorer** and open the **MainPage.xaml.cs** file and replace its entire contents with the following.</span></span>
+<span data-ttu-id="e2a67-164">Теперь, когда все страницы находятся на месте, обновите код программной части для **MainPage. XAML**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-164">Now that all of the pages are in place, update the code-behind for **MainPage.xaml**.</span></span> <span data-ttu-id="e2a67-165">Разверните **MainPage. XAML** в **обозревателе решений** и откройте файл **MainPage.XAML.CS** и замените все содержимое приведенным ниже кодом.</span><span class="sxs-lookup"><span data-stu-id="e2a67-165">Expand **MainPage.xaml** in **Solution Explorer** and open the **MainPage.xaml.cs** file and replace its entire contents with the following.</span></span>
 
 ```cs
 using System;
@@ -445,6 +447,6 @@ namespace GraphTutorial
 }
 ```
 
-<span data-ttu-id="f30ff-167">Сохраните все изменения.</span><span class="sxs-lookup"><span data-stu-id="f30ff-167">Save all of your changes.</span></span> <span data-ttu-id="f30ff-168">Щелкните правой кнопкой мыши проект, который требуется запустить (Android, iOS или UWP), и выберите команду **назначить запускаемЫм проектом**.</span><span class="sxs-lookup"><span data-stu-id="f30ff-168">Right-click the project that you want to run (Android, iOS, or UWP) and choose **Set as StartUp Project**.</span></span> <span data-ttu-id="f30ff-169">Нажмите клавишу **F5** или выберите **Отладка _гт_ начать отладку** в Visual Studio.</span><span class="sxs-lookup"><span data-stu-id="f30ff-169">Press **F5** or select **Debug > Start Debugging** in Visual Studio.</span></span>
+<span data-ttu-id="e2a67-166">Сохраните все изменения.</span><span class="sxs-lookup"><span data-stu-id="e2a67-166">Save all of your changes.</span></span> <span data-ttu-id="e2a67-167">Щелкните правой кнопкой мыши проект, который требуется запустить (Android, iOS или UWP), и выберите команду **Назначить запускаемым проектом**.</span><span class="sxs-lookup"><span data-stu-id="e2a67-167">Right-click the project that you want to run (Android, iOS, or UWP) and choose **Set as StartUp Project**.</span></span> <span data-ttu-id="e2a67-168">Нажмите клавишу **F5** или выберите **Отладка _гт_ начать отладку** в Visual Studio.</span><span class="sxs-lookup"><span data-stu-id="e2a67-168">Press **F5** or select **Debug > Start Debugging** in Visual Studio.</span></span>
 
 ![Снимки экрана с версиями приложения для Android, iOS и UWP](./images/welcome-page.png)
