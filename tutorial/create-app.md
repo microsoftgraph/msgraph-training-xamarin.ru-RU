@@ -1,19 +1,19 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-Откройте Visual Studio и выберите **файл _Гт_ создать проект _гт_**. В диалоговом окне **Новый проект** выполните следующие действия:
+Откройте Visual Studio и выберите **создать новый проект**. В диалоговом окне **Создание нового проекта** выберите **мобильные приложения (Xamarin. Forms)**, а затем нажмите кнопку **Далее**.
 
-1. Выберите **_гт_ на нескольких платформах Visual C#**.
-1. Выберите **мобильНое приложение (Xamarin. Forms)**.
-1. Введите **графтуториал** в качестве имени проекта.
+![Visual Studio 2019 диалоговое окно создания нового проекта](images/new-project-dialog.png)
 
-![Visual Studio 2017 диалоговое окно создания нового проекта](images/new-project-dialog.png)
+В диалоговом окне **Настройка нового проекта** введите `GraphTutorial` **имя проекта** и **имя решения**, а затем нажмите кнопку **создать**.
 
 > [!IMPORTANT]
 > Убедитесь, что вы вводите точно такое же имя для проекта Visual Studio, которое указано в этих инструкциях лаборатории. Имя проекта Visual Studio становится частью пространства имен в коде. Код в этих инструкциях зависит от пространства имен, которое соответствует имени проекта Visual Studio, указанного в данных инструкциях. Если вы используете другое имя проекта, код не будет компилироваться, если не настроить все пространства имен в качестве имени проекта Visual Studio, вводимого при создании проекта.
 
-Нажмите кнопку **ОК**. В диалоговом окне **Создание ПерекрестНой платформы** выберите **пустой** шаблон и убедитесь, что выбрана **стратегия общего доступа к коду** **.NET Standard**. Если вы планируете пропустить определенную платформу, вы можете отменить выбор этого параметра в разделе **платформы**. Нажмите кнопку **ОК** , чтобы создать решение.
+![Visual Studio 2019 Настройка диалогового окна "создать проект"](images/configure-new-project-dialog.png)
 
-![Диалоговое окно Visual Studio 2017 New Cross Platform App](images/new-cross-platform-app-dialog.png)
+В диалоговом окне **Создание многоплатформенного приложения** выберите **пустой** шаблон и выберите платформы, которые необходимо создать на **платформе**. Нажмите кнопку **ОК** , чтобы создать решение.
+
+![Диалоговое окно Visual Studio 2019 New Cross Platform App](images/new-cross-platform-app-dialog.png)
 
 Прежде чем переходить, установите некоторые дополнительные пакеты NuGet, которые будут использоваться позже.
 
@@ -23,11 +23,10 @@
 Выберите **инструменты _Гт_ диспетчера пакетов NuGet _Гт_ консоли диспетчера пакетов**. В консоли диспетчера пакетов введите указанные ниже команды.
 
 ```Powershell
-Install-Package Microsoft.Identity.Client -Version 2.7.0 -Project GraphTutorial
-Install-Package Xamarin.Android.Support.Compat -Version 27.0.2.1 -Project GraphTutorial.Android
-Install-Package Microsoft.Identity.Client -Version 2.7.0 -Project GraphTutorial.Android
-Install-Package Microsoft.Identity.Client -Version 2.7.0 -Project GraphTutorial.iOS
-Install-Package Microsoft.Graph -Version 1.12.0 -Project GraphTutorial
+Install-Package Microsoft.Identity.Client -Version 3.0.8 -Project GraphTutorial
+Install-Package Microsoft.Identity.Client -Version 3.0.8 -Project GraphTutorial.Android
+Install-Package Microsoft.Identity.Client -Version 3.0.8 -Project GraphTutorial.iOS
+Install-Package Microsoft.Graph -Version 1.15.0 -Project GraphTutorial
 ```
 
 ## <a name="design-the-app"></a>Проектирование приложения
@@ -168,9 +167,9 @@ private Stream GetUserPhoto()
 
 #### <a name="implement-the-menu"></a>Реализация меню
 
-Начните с создания модели для представления элементов меню. Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **Новая папка**. НаЗовите папку `Models`.
+Начните с создания модели для представления элементов меню. Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **Новая папка**. Назовите папку `Models`.
 
-Щелкните правой кнопкой мыши **** папку Models и выберите команду **Добавить**, а затем **класс...**. НаЗовите класс `NavMenuItem` и нажмите кнопку **Добавить**. Откройте файл **NavMenuItem.CS** и замените его содержимое на приведенный ниже код.
+Щелкните правой кнопкой мыши **** папку Models и выберите команду **Добавить**, а затем **класс...**. Назовите класс `NavMenuItem` и нажмите кнопку **Добавить**. Откройте файл **NavMenuItem.CS** и замените его содержимое на приведенный ниже код.
 
 ```cs
 namespace GraphTutorial.Models
@@ -275,7 +274,7 @@ namespace GraphTutorial
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MenuPage : ContentPage
     {
-        MainPage RootPage { get => Application.Current.MainPage as MainPage; }
+        MainPage RootPage => Application.Current.MainPage as MainPage;
         List<NavMenuItem> menuItems;
 
         public MenuPage ()
@@ -321,6 +320,9 @@ namespace GraphTutorial
     }
 }
 ```
+
+> [!NOTE]
+> Visual Studio сообщит об ошибках в **MenuPage.XAML.CS**. Эти ошибки будут устранены на более позднем этапе.
 
 #### <a name="implement-the-welcome-page"></a>Реализация страницы приветствия
 
@@ -445,6 +447,6 @@ namespace GraphTutorial
 }
 ```
 
-Сохраните все изменения. Щелкните правой кнопкой мыши проект, который требуется запустить (Android, iOS или UWP), и выберите команду **назначить запускаемЫм проектом**. Нажмите клавишу **F5** или выберите **Отладка _гт_ начать отладку** в Visual Studio.
+Сохраните все изменения. Щелкните правой кнопкой мыши проект, который требуется запустить (Android, iOS или UWP), и выберите команду **Назначить запускаемым проектом**. Нажмите клавишу **F5** или выберите **Отладка _гт_ начать отладку** в Visual Studio.
 
 ![Снимки экрана с версиями приложения для Android, iOS и UWP](./images/welcome-page.png)

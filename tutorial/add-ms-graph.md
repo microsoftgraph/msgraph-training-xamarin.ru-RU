@@ -50,7 +50,7 @@ protected override async void OnAppearing()
 }
 ```
 
-РасСмотрите, какие действия `OnAppearing` выполняет код.
+Рассмотрите, какие действия `OnAppearing` выполняет код.
 
 - URL-адрес, который будет вызываться — это `/v1.0/me/events`.
 - `Select` Функция ограничит поля, возвращаемые для каждого события, только теми, которые будут реально использоваться в представлении.
@@ -60,7 +60,7 @@ protected override async void OnAppearing()
 
 ## <a name="display-the-results"></a>Отображение результатов
 
-Теперь вы можете заменить дамп JSON на какой-то способ отобразить результаты в удобном для пользователя виде. Сначала создайте преобразователь [значений привязки](/xamarin/xamarin-forms/xaml/xaml-basics/data-binding-basics#binding-value-converters) , чтобы преобразовать значения [dateTimeTimeZone](/graph/api/resources/datetimetimezone?view=graph-rest-1.0) , возвращенные Microsoft Graph, в форматы даты и времени, которые ожидает пользователь. Щелкните правой кнопкой мыши **** папку Models в проекте **Графтуториал** и выберите **создать**, затем **класс...**. НаЗовите класс `GraphDateTimeTimeZoneConverter` и нажмите кнопку **Добавить**. Замените все содержимое файла на приведенный ниже код.
+Теперь вы можете заменить дамп JSON на какой-то способ отобразить результаты в удобном для пользователя виде. Сначала создайте преобразователь [значений привязки](/xamarin/xamarin-forms/xaml/xaml-basics/data-binding-basics#binding-value-converters) , чтобы преобразовать значения [dateTimeTimeZone](/graph/api/resources/datetimetimezone?view=graph-rest-1.0) , возвращенные Microsoft Graph, в форматы даты и времени, которые ожидает пользователь. Щелкните правой кнопкой мыши **** папку Models в проекте **графтуториал** и последовательно выберите пункты **добавить**и **класс...**. Назовите класс `GraphDateTimeTimeZoneConverter` и нажмите кнопку **Добавить**. Замените все содержимое файла на приведенный ниже код.
 
 ```cs
 using Microsoft.Graph;
@@ -115,7 +115,7 @@ namespace GraphTutorial.Models
     <ContentPage.Content>
         <StackLayout>
             <ListView x:Name="CalendarList"
-                      VerticalOptions="StartAndExpand"
+                      HasUnevenRows="true"
                       Margin="10,10,10,10">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -160,4 +160,4 @@ CalendarList.ItemsSource = events.CurrentPage.ToList();
 
 Запустите приложение и войдите в систему, а затем щелкните **** элемент навигации по календарю. Вы должны увидеть список событий с отформатированными **начальным** и **конечным** значениями.
 
-![Снимок экрана С таблицей событий](./images/calendar-page.png)
+![Снимок экрана с таблицей событий](./images/calendar-page.png)

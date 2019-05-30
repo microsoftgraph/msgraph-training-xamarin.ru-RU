@@ -1,8 +1,8 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-В этом упражнении вы будете расширяем приложение из предыдущего упражнения для поддержки проверки подлинности с помощью Azure AD. Это необходимо для получения необходимого маркера доступа OAuth для вызова Microsoft Graph. На этом этапе выполняется интеграция [библиотеки проверки ПодлиннОсти Microsoft для .NET (MSAL)](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) в приложение.
+В этом упражнении вы будете расширяем приложение из предыдущего упражнения для поддержки проверки подлинности с помощью Azure AD. Это необходимо для получения необходимого маркера доступа OAuth для вызова Microsoft Graph. На этом этапе выполняется интеграция [библиотеки проверки подлинности Microsoft для .NET (MSAL)](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) в приложение.
 
-В **обозревателе решений**разверните проект **графтуториал** и щелкните правой кнопкой мыши папку **Models** . Нажмите кнопку **Добавить класс _гт_...**. НаЗовите класс `OAuthSettings` и нажмите кнопку **Добавить**. Откройте файл **OAuthSettings.CS** и замените его содержимое на приведенный ниже код.
+В **обозревателе решений**разверните проект **графтуториал** и щелкните правой кнопкой мыши папку **Models** . Нажмите кнопку **Добавить класс _гт_...**. Назовите класс `OAuthSettings` и нажмите кнопку **Добавить**. Откройте файл **OAuthSettings.CS** и замените его содержимое на приведенный ниже код.
 
 ```cs
 namespace GraphTutorial.Models
@@ -10,11 +10,12 @@ namespace GraphTutorial.Models
     public static class OAuthSettings
     {
         public const string ApplicationId = "YOUR_APP_ID_HERE";
-        public const string RedirectUri = "YOUR_REDIRECT_URI_HERE";
         public const string Scopes = "User.Read Calendars.Read";
     }
 }
 ```
+
+Замените `YOUR_APP_ID_HERE` идентификатором приложения из регистрации приложения.
 
 > [!IMPORTANT]
 > Если вы используете систему управления версиями (например, Git), то теперь мы бы не могли исключить `OAuthSettings.cs` файл из системы управления версиями, чтобы избежать случайной утечки идентификатора приложения.
@@ -36,10 +37,13 @@ using System.Net.Http.Headers;
 
 ```cs
 // UIParent used by Android version of the app
-public static UIParent AuthUIParent = null;
+public static object AuthUIParent = null;
+
+// Keychain security group used by iOS version of the app
+public static string iOSKeychainSecurityGroup = null;
 
 // Microsoft Authentication client for native/mobile apps
-public static PublicClientApplication PCA;
+public static IPublicClientApplication PCA;
 
 // Microsoft Graph client
 public static GraphServiceClient GraphClient;
@@ -52,7 +56,15 @@ public App()
 {
     InitializeComponent();
 
-    PCA = new PublicClientApplication(OAuthSettings.ApplicationId);
+    var builder = PublicClientApplicationBuilder
+        .Create(OAuthSettings.ApplicationId);
+
+    if (!string.IsNullOrEmpty(iOSKeychainSecurityGroup))
+    {
+        builder = builder.WithIosKeychainSecurityGroup(iOSKeychainSecurityGroup);
+    }
+
+    PCA = builder.Build();
 
     MainPage = new MainPage();
 }
@@ -66,25 +78,44 @@ var scopes = OAuthSettings.Scopes.Split(' ');
 // First, attempt silent sign in
 // If the user's information is already in the app's cache,
 // they won't have to sign in again.
+string accessToken = string.Empty;
 try
 {
     var accounts = await PCA.GetAccountsAsync();
-    var silentAuthResult = await PCA.AcquireTokenSilentAsync(
-        scopes, accounts.FirstOrDefault());
+    if (accounts.Count() > 0)
+    {
+        var silentAuthResult = await PCA
+            .AcquireTokenSilent(scopes, accounts.FirstOrDefault())
+            .ExecuteAsync();
 
-    Debug.WriteLine("User already signed in.");
-    Debug.WriteLine($"Access token: {silentAuthResult.AccessToken}");
+        Debug.WriteLine("User already signed in.");
+        Debug.WriteLine($"Access token: {silentAuthResult.AccessToken}");
+        accessToken = silentAuthResult.AccessToken;
+    }
 }
 catch (MsalUiRequiredException)
 {
     // This exception is thrown when an interactive sign-in is required.
+    Debug.WriteLine("Silent token request failed, user needs to sign-in");
+}
+
+if (string.IsNullOrEmpty(accessToken))
+{
     // Prompt the user to sign-in
-    var authResult = await PCA.AcquireTokenAsync(scopes, AuthUIParent);
+    var interactiveRequest = PCA.AcquireTokenInteractive(scopes);
+
+    if (AuthUIParent != null)
+    {
+        interactiveRequest = interactiveRequest
+            .WithParentActivityOrWindow(AuthUIParent);
+    }
+
+    var authResult = await interactiveRequest.ExecuteAsync();
     Debug.WriteLine($"Access Token: {authResult.AccessToken}");
 }
 ```
 
-Этот код сначала пытается получить маркер доступа в автоматическом режиме. Если сведения о пользователе уже находятся в кэше приложения (например, если пользователь закрыл приложение раньше, без выхода), это будет успешным, и нет причин запрашивать пользователя. Если в кэше нет сведений о пользователе, `AcquireTokenSilentAsync` функция создает исключение. `MsalUiRequiredException` В этом случае код вызывает интерактивную функцию для получения маркера `AcquireTokenAsync`.
+Этот код сначала пытается получить маркер доступа в автоматическом режиме. Если сведения о пользователе уже находятся в кэше приложения (например, если пользователь закрыл приложение раньше, без выхода), это будет успешным, и нет причин запрашивать пользователя. Если в кэше нет сведений о пользователе, `AcquireTokenSilent().ExecuteAsync()` функция создает исключение. `MsalUiRequiredException` В этом случае код вызывает интерактивную функцию для получения маркера `AcquireTokenInteractive`.
 
 Теперь обновите `SignOut` функцию, чтобы удалить сведения о пользователе из кэша. Добавьте следующий код в начало `SignOut` функции.
 
@@ -100,33 +131,32 @@ while (accounts.Any())
 }
 ```
 
-Наконец, обновите `MainPage` класс, чтобы войти в систему при загрузке. Добавьте указанную ниже функцию в `MainPage` класс в **MainPage.XAML.CS**.
-
-```cs
-protected override async void OnAppearing()
-{
-    base.OnAppearing();
-    await (Application.Current as App).SignIn();
-}
-```
-
 ### <a name="update-android-project-to-enable-sign-in"></a>Обновление проекта Android для включения входа
 
-При использовании в проекте Xamarin Android Библиотека проверки поДлинности (Майкрософт) имеет несколько [требований, характерных для Android](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Xamarin-Android-specifics).
+При использовании в проекте Xamarin Android Библиотека проверки подлинности (Майкрософт) имеет несколько [требований, характерных для Android](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Xamarin-Android-specifics).
 
-Сначала необходимо добавить URI перенаправления из регистрации приложения в манифест Android. Для этого добавьте новое действие в проект **графтуториал. Android** . Щелкните правой кнопкой мыши **графтуториал. Android** и выберите команду **Добавить**, а затем — **новый элемент...**. Выберите **действие**, введите имя действия `MsalActivity`и нажмите кнопку **добавить**.
+Сначала необходимо обновить манифест Android, чтобы зарегистрировать URI перенаправления. В проекте **графтуториал. Android** разверните папку **свойства** , а затем откройте **файл AndroidManifest. XML**. Если вы используете Visual Studio для Mac, переключитесь на представление **источника** с помощью вкладок в нижней части файла. Замените все содержимое приведенным ниже содержимым.
 
-Откройте файл **MsalActivity.CS** и удалите `[Activity(Label = "MsalActivity")]` строку, а затем добавьте следующие атрибуты над объявлением класса.
-
-```cs
-// This class only exists to create the necessary activity in the Android
-// manifest. Doing it this way allows the value of the RedirectUri constant
-// to be inserted at build.
-[Activity(Name = "microsoft.identity.client.BrowserTabActivity")]
-[IntentFilter(new[] { Intent.ActionView },
-    Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-    DataScheme = Models.OAuthSettings.RedirectUri, DataHost = "auth")]
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.GraphTutorial">
+    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28" />
+    <application android:label="GraphTutorial.Android">
+        <activity android:name="microsoft.identity.client.BrowserTabActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="msalYOUR_APP_ID_HERE" android:host="auth" />
+            </intent-filter>
+        </activity>
+    </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>
 ```
+
+Замените `YOUR_APP_ID_HERE` идентификатором приложения из регистрации приложения.
 
 Затем откройте **MainActivity.CS** и добавьте приведенные ниже `using` операторы в начало файла.
 
@@ -146,25 +176,31 @@ protected override void OnActivityResult(int requestCode, Result resultCode, Int
 }
 ```
 
+Наконец, в `OnCreate` функции добавьте следующую строку после `LoadApplication(new App());` строки.
+
+```cs
+App.AuthUIParent = this;
+```
+
 ### <a name="update-ios-project-to-enable-sign-in"></a>Обновление проекта iOS для включения входа
 
 > [!IMPORTANT]
-> Так как MSAL требует использования файла. plist, необходимо настроить Visual Studio с помощью учетной записи разработчика Apple, чтобы включить подготовку. Для получения дополнительных сведений см [deviceIng Device Подготовка для Xamarin. iOS](/xamarin/ios/get-started/installation/device-provisioning).
+> Так как MSAL требует использования файла. plist, необходимо настроить Visual Studio с помощью учетной записи разработчика Apple, чтобы включить подготовку. Если вы используете это руководство в имитаторе iPhone, необходимо добавить **plist** в поле " **Настраиваемые** права" в параметрах проекта **** **графтуториал. iOS** в параметрах проекта. Для получения дополнительных сведений см [deviceing Device Подготовка для Xamarin. iOS](/xamarin/ios/get-started/installation/device-provisioning).
 
-При использовании в проекте Xamarin для iOS Библиотека проверки поДлинности (Майкрософт) имеет несколько [требований, характерных для iOS](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Xamarin-iOS-specifics).
+При использовании в проекте Xamarin для iOS Библиотека проверки подлинности (Майкрософт) имеет несколько [требований, характерных для iOS](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Xamarin-iOS-specifics).
 
 Для начала необходимо включить доступ к цепочке ключей. В обозревателе решений разверните проект **графтуториал. iOS** , а затем откройте файл **plist** . Укажите право на предоставление **цепочки ключей** и выберите **включить цепочку ключей**. В **группы цепочки ключей**добавьте запись в формате `com.YOUR_DOMAIN.GraphTutorial`.
 
 ![Снимок экрана: Настройка обслуживания цепочки ключей](./images/enable-keychain-access.png)
 
-Далее необходимо зарегистрировать URI перенаправления, настроенный в шаге регистрации приложения, в виде URL-адреса, который обрабатывает ваше приложение. Откройте файл **info. plist** и внесите следующие изменения.
+Далее необходимо зарегистрировать URI перенаправления MSAL по умолчанию в качестве типа URL-адреса, обрабатываемого вашим приложением. Откройте файл **info. plist** и внесите следующие изменения.
 
 - На вкладке **приложение** убедитесь, что значение **идентификатора пакета** соответствует значению, заданному для **групп ключей** в целях **обслуживания. plist**. Если это не так, обновите его сейчас.
 - На вкладке **Дополнительно** перейдите в раздел **типы URL-адресов** . Добавьте URL-адрес типа со следующими значениями:
-    - **Identifier**: значение **идентификатора набора**
-    - **Схемы URL-адресов**: укажите URI перенаправления из регистрации приложения, начинающиеся с`msal`
-    - **Роль**:`Editor`
-    - **Значок**: оставьте пустым
+  - **Identifier**: значение **идентификатора набора**
+  - **Схемы URL-адресов**: `msal{YOUR-APP-ID}`задано значение. Например, если идентификатор приложения — `67ad5eba-0cfc-414d-8f9f-0a6d973a907c`, задайте значение. `msal67ad5eba-0cfc-414d-8f9f-0a6d973a907c`
+  - **Роль**:`Editor`
+  - **Значок**: оставьте пустым
 
 ![Снимок экрана с разделом "типы URL-адресов" в разделе info. plist](./images/add-url-type.png)
 
@@ -174,11 +210,11 @@ protected override void OnActivityResult(int requestCode, Result resultCode, Int
 using Microsoft.Identity.Client;
 ```
 
-Добавьте указанную ниже строку `FinishedLaunching` , чтобы работать непосредственно `return` перед оператором.
+Добавьте указанную ниже строку `FinishedLaunching` , чтобы она функционировала непосредственно перед `LoadApplication(new App());` строкой.
 
 ```cs
 // Specify the Keychain access group
-App.PCA.iOSKeychainSecurityGroup = "com.graphdevx.GraphTutorial";
+App.iOSKeychainSecurityGroup = NSBundle.MainBundle.BundleIdentifier;
 ```
 
 Наконец, переопределите `OpenUrl` функцию, чтобы передать URL-адрес в библиотеку MSAL. Добавьте в `AppDelegate` класс следующее:
@@ -195,7 +231,7 @@ public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
 
 ## <a name="storing-the-tokens"></a>Сохранение маркеров
 
-Когда библиотека проверки поДлинности (Майкрософт) используется в проекте Xamarin, для кэширования маркеров по умолчанию используется встроенное безопасное хранение. Дополнительные сведения см. в статье [сериализация кэша маркеров](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/token-cache-serialization) .
+Когда библиотека проверки подлинности (Майкрософт) используется в проекте Xamarin, для кэширования маркеров по умолчанию используется встроенное безопасное хранение. Дополнительные сведения см. в статье [сериализация кэша маркеров](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/token-cache-serialization) .
 
 ## <a name="test-sign-in"></a>Проверка входа
 
@@ -214,7 +250,8 @@ GraphClient = new GraphServiceClient(new DelegateAuthenticationProvider(
     {
         var accounts = await PCA.GetAccountsAsync();
 
-        var result = await PCA.AcquireTokenSilentAsync(scopes, accounts.FirstOrDefault());
+        var result = await PCA.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
+            .ExecuteAsync();
 
         requestMessage.Headers.Authorization =
             new AuthenticationHeaderValue("Bearer", result.AccessToken);
@@ -236,4 +273,3 @@ private async Task GetUserInfo()
 ```
 
 Если вы сохраните изменения и запустите приложение сейчас, после входа в пользовательский интерфейс отобразится отображаемое имя пользователя и адрес электронной почты.
-
