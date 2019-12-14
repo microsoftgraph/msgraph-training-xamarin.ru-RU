@@ -33,6 +33,12 @@ using System.Linq;
 using System.Net.Http.Headers;
 ```
 
+Измените строку объявления класса **приложения** , чтобы разрешить конфликт имен для **приложения**.
+
+```cs
+public partial class App : Xamarin.Forms.Application, INotifyPropertyChanged
+```
+
 Добавьте в `App` класс указанные ниже свойства.
 
 ```cs
@@ -47,6 +53,9 @@ public static IPublicClientApplication PCA;
 
 // Microsoft Graph client
 public static GraphServiceClient GraphClient;
+
+// Microsoft Graph permissions used by app
+private readonly string[] Scopes = OAuthSettings.Scopes.Split(' ');
 ```
 
 Затем создайте новый `PublicClientApplication` элемент в конструкторе `App` класса.
@@ -73,36 +82,27 @@ public App()
 Теперь обновите `SignIn` функцию, чтобы она `PublicClientApplication` использовалась для получения маркера доступа. Добавьте приведенный ниже код перед `await GetUserInfo();` строкой.
 
 ```cs
-var scopes = OAuthSettings.Scopes.Split(' ');
-
 // First, attempt silent sign in
 // If the user's information is already in the app's cache,
 // they won't have to sign in again.
-string accessToken = string.Empty;
 try
 {
     var accounts = await PCA.GetAccountsAsync();
-    if (accounts.Count() > 0)
-    {
-        var silentAuthResult = await PCA
-            .AcquireTokenSilent(scopes, accounts.FirstOrDefault())
-            .ExecuteAsync();
 
-        Debug.WriteLine("User already signed in.");
-        Debug.WriteLine($"Access token: {silentAuthResult.AccessToken}");
-        accessToken = silentAuthResult.AccessToken;
-    }
+    var silentAuthResult = await PCA
+        .AcquireTokenSilent(Scopes, accounts.FirstOrDefault())
+        .ExecuteAsync();
+
+    Debug.WriteLine("User already signed in.");
+    Debug.WriteLine($"Successful silent authentication for: {silentAuthResult.Account.Username}");
+    Debug.WriteLine($"Access token: {silentAuthResult.AccessToken}");
 }
-catch (MsalUiRequiredException)
+catch (MsalUiRequiredException msalEx)
 {
     // This exception is thrown when an interactive sign-in is required.
-    Debug.WriteLine("Silent token request failed, user needs to sign-in");
-}
-
-if (string.IsNullOrEmpty(accessToken))
-{
+    Debug.WriteLine("Silent token request failed, user needs to sign-in: " + msalEx.Message);
     // Prompt the user to sign-in
-    var interactiveRequest = PCA.AcquireTokenInteractive(scopes);
+    var interactiveRequest = PCA.AcquireTokenInteractive(Scopes);
 
     if (AuthUIParent != null)
     {
@@ -110,8 +110,13 @@ if (string.IsNullOrEmpty(accessToken))
             .WithParentActivityOrWindow(AuthUIParent);
     }
 
-    var authResult = await interactiveRequest.ExecuteAsync();
-    Debug.WriteLine($"Access Token: {authResult.AccessToken}");
+    var interactiveAuthResult = await interactiveRequest.ExecuteAsync();
+    Debug.WriteLine($"Successful interactive authentication for: {interactiveAuthResult.Account.Username}");
+    Debug.WriteLine($"Access token: {interactiveAuthResult.AccessToken}");
+}
+catch (Exception ex)
+{
+    Debug.WriteLine("Authentication failed. See exception messsage for more details: " + ex.Message);
 }
 ```
 
@@ -185,7 +190,7 @@ App.AuthUIParent = this;
 ### <a name="update-ios-project-to-enable-sign-in"></a>Обновление проекта iOS для включения входа
 
 > [!IMPORTANT]
-> Так как MSAL требует использования файла. plist, необходимо настроить Visual Studio с помощью учетной записи разработчика Apple, чтобы включить подготовку. Если вы используете это руководство в имитаторе iPhone, вам нужно добавить plists **.** в поле **Настраиваемые** права в параметрах проекта **графтуториал. iOS** , **Сборка >Подписывание пакетов iOS**. Для получения дополнительных сведений см [deviceing Device Подготовка для Xamarin. iOS](/xamarin/ios/get-started/installation/device-provisioning).
+> Так как MSAL требует использования файла. plist, необходимо настроить Visual Studio с помощью учетной записи разработчика Apple, чтобы включить подготовку. Если вы используете это руководство в имитаторе iPhone, вам нужно добавить **plists.** в поле **Настраиваемые** права в параметрах проекта **графтуториал. iOS** , **Сборка >Подписывание пакетов iOS**. Для получения дополнительных сведений см [deviceing Device Подготовка для Xamarin. iOS](/xamarin/ios/get-started/installation/device-provisioning).
 
 При использовании в проекте Xamarin для iOS Библиотека проверки подлинности (Майкрософт) имеет несколько [требований, характерных для iOS](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/Xamarin-iOS-specifics).
 
@@ -241,21 +246,56 @@ public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
 
 ## <a name="get-user-details"></a>Получение сведений о пользователе
 
-Теперь обновите `SignIn` функцию в **app.XAML.CS** , чтобы инициализировать `GraphServiceClient`. Добавьте следующий код перед `await GetUserInfo();` строкой.
+Добавьте новую функцию в класс **app** , чтобы инициализировать `GraphServiceClient`.
 
 ```cs
-// Initialize Graph client
-GraphClient = new GraphServiceClient(new DelegateAuthenticationProvider(
-    async (requestMessage) =>
+private async Task InitializeGraphClientAsync()
+{
+    var currentAccounts = await PCA.GetAccountsAsync();
+    try
     {
-        var accounts = await PCA.GetAccountsAsync();
+        if (currentAccounts.Count() > 0)
+        {
+            // Initialize Graph client
+            GraphClient = new GraphServiceClient(new DelegateAuthenticationProvider(
+                async (requestMessage) =>
+                {
+                    var result = await PCA.AcquireTokenSilent(Scopes, currentAccounts.FirstOrDefault())
+                        .ExecuteAsync();
 
-        var result = await PCA.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
-            .ExecuteAsync();
+                    requestMessage.Headers.Authorization =
+                        new AuthenticationHeaderValue("Bearer", result.AccessToken);
+                }));
 
-        requestMessage.Headers.Authorization =
-            new AuthenticationHeaderValue("Bearer", result.AccessToken);
-    }));
+            await GetUserInfo();
+
+            IsSignedIn = true;
+        }
+        else
+        {
+            IsSignedIn = false;
+        }
+    }
+    catch(Exception ex)
+    {
+        Debug.WriteLine(
+            $"Failed to initialized graph client. Accounts in the msal cache: {currentAccounts.Count()}. See exception message for details: {ex.Message}");
+    }
+}
+```
+
+Теперь обновите `SignIn` функцию в **app.XAML.CS** , чтобы вызвать эту функцию, `GetUserInfo`а не. Удалите из `SignIn` функции следующее:
+
+```cs
+await GetUserInfo();
+
+IsSignedIn = true;
+```
+
+Добавьте следующий элемент в конец `SignIn` функции.
+
+```cs
+await InitializeGraphClientAsync();
 ```
 
 Теперь обновите `GetUserInfo` функцию, чтобы получить сведения о пользователе из Microsoft Graph. Замените имеющуюся функцию `GetUserInfo` указанным ниже кодом.

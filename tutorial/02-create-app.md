@@ -23,10 +23,10 @@
 Выберите **инструменты > диспетчер пакетов NuGet > консоли диспетчера пакетов**. В консоли диспетчера пакетов введите указанные ниже команды.
 
 ```Powershell
-Install-Package Microsoft.Identity.Client -Version 3.0.8 -Project GraphTutorial
-Install-Package Microsoft.Identity.Client -Version 3.0.8 -Project GraphTutorial.Android
-Install-Package Microsoft.Identity.Client -Version 3.0.8 -Project GraphTutorial.iOS
-Install-Package Microsoft.Graph -Version 1.15.0 -Project GraphTutorial
+Install-Package Microsoft.Identity.Client -Version 4.7.1 -Project GraphTutorial
+Install-Package Microsoft.Identity.Client -Version 4.7.1 -Project GraphTutorial.Android
+Install-Package Microsoft.Identity.Client -Version 4.7.1 -Project GraphTutorial.iOS
+Install-Package Microsoft.Graph -Version 1.20.0 -Project GraphTutorial
 ```
 
 ## <a name="design-the-app"></a>Проектирование приложения
@@ -133,7 +133,7 @@ private Stream GetUserPhoto()
 }
 ```
 
-`GetUserPhoto` Функция возвращает фотографию, используемую по умолчанию. Вы можете указать собственный файл здесь или скачать его, использованный в примере, на сайте [GitHub](https://github.com/microsoftgraph/msgraph-training-xamarin/blob/master/tutorial/images/no-profile-pic.png). Скопируйте файл в `./GraphTutorial/GraphTutorial` каталог. Щелкните правой кнопкой мыши проект **графтуториал** в **обозревателе решений** и выберите **добавить**, а затем **существующий элемент...**. Выберите `no-profile-pic.png` файл и нажмите кнопку **Добавить**. Теперь щелкните правой кнопкой мыши файл в **обозревателе решений** и выберите пункт **свойства**. В окне **Свойства** измените значение **действия** при построении на внедренный **ресурс**.
+`GetUserPhoto` Функция возвращает фотографию, используемую по умолчанию. Вы можете указать собственный файл здесь или скачать его, использованный в примере, на сайте [GitHub](https://github.com/microsoftgraph/msgraph-training-xamarin/blob/master/tutorial/images/no-profile-pic.png). Скопируйте файл в `./GraphTutorial/GraphTutorial` каталог. Щелкните правой кнопкой мыши проект **графтуториал** в **обозревателе решений** и выберите **добавить**, а затем **существующий элемент...**. Выберите `no-profile-pic.png` файл и нажмите кнопку **Добавить**. Теперь щелкните правой кнопкой мыши файл в **обозревателе решений** и выберите пункт **свойства**. В окне **Свойства** измените значение **действия при построении** на **внедренный ресурс**.
 
 ![Снимок экрана: окно "Свойства" для PNG-файла](./images/png-file-properties.png)
 
@@ -169,7 +169,7 @@ private Stream GetUserPhoto()
 
 Начните с создания модели для представления элементов меню. Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **Новая папка**. Назовите папку `Models`.
 
-Щелкните правой кнопкой мыши **** папку Models и выберите команду **Добавить**, а затем — **класс...**. Назовите класс `NavMenuItem` и нажмите кнопку **Добавить**. Откройте файл **NavMenuItem.CS** и замените его содержимое на приведенный ниже код.
+Щелкните правой кнопкой мыши папку **Models** и выберите команду **Добавить**, а затем — **класс...**. Назовите класс `NavMenuItem` и нажмите кнопку **Добавить**. Откройте файл **NavMenuItem.CS** и замените его содержимое на приведенный ниже код.
 
 ```cs
 namespace GraphTutorial.Models
