@@ -1,10 +1,10 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-В этом упражнении вы добавите Microsoft Graph в приложение. Для этого приложения вы будете использовать [клиентскую библиотеку Microsoft Graph для .NET](https://github.com/microsoftgraph/msgraph-sdk-dotnet) , чтобы совершать вызовы в Microsoft Graph.
+В этом упражнении вы включаете Microsoft Graph в приложение. Для этого приложения вы будете использовать клиентскую библиотеку Microsoft Graph для [.NET](https://github.com/microsoftgraph/msgraph-sdk-dotnet) для вызова Microsoft Graph.
 
-## <a name="get-calendar-events-from-outlook"></a>Получение событий календаря из Outlook
+## <a name="get-calendar-events-from-outlook"></a>Получить события календаря из Outlook
 
-1. Откройте **календарпаже. XAML** в проекте **графтуториал** и замените его содержимое приведенным ниже кодом.
+1. Откройте **CalendarPage.xaml** в **проекте GraphTutorial** и замените его содержимое на следующее.
 
     ```xaml
     <?xml version="1.0" encoding="utf-8" ?>
@@ -23,7 +23,7 @@
     </ContentPage>
     ```
 
-1. Откройте **CalendarPage.XAML.CS** и добавьте приведенные `using` ниже операторы в начало файла.
+1. Откройте **CalendarPage.xaml.cs** и добавьте следующие `using` утверждения в верхней части файла.
 
     ```csharp
     using Microsoft.Graph;
@@ -32,15 +32,26 @@
     using System.ComponentModel;
     ```
 
-1. Добавьте указанную ниже функцию в `CalendarPage` класс, чтобы получить события пользователя и ОТОБРАЗИТЬ ответ JSON.
+1. Добавьте в класс следующую функцию, чтобы получить события пользователя и `CalendarPage` отобразить ответ JSON.
 
     ```csharp
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
+        // Get start and end of week in user's time zone
+        var startOfWeek = GetUtcStartOfWeekInTimeZone(DateTime.Today, App.UserTimeZone);
+        var endOfWeek = startOfWeek.AddDays(7);
+
+        var queryOptions = new List<QueryOption>
+        {
+            new QueryOption("startDateTime", startOfWeek.ToString("o")),
+            new QueryOption("endDateTime", endOfWeek.ToString("o"))
+        };
+
         // Get the events
-        var events = await App.GraphClient.Me.Events.Request()
+        var events = await App.GraphClient.Me.CalendarView.Request(queryOptions)
+            .Header("Prefer", $"outlook.timezone=\"{App.UserTimeZone.DisplayName}\"")
             .Select(e => new
             {
                 e.Subject,
@@ -48,7 +59,8 @@
                 e.Start,
                 e.End
             })
-            .OrderBy("createdDateTime DESC")
+            .OrderBy("start/DateTime")
+            .Top(50)
             .GetAsync();
 
         // Temporary
@@ -56,46 +68,49 @@
     }
     ```
 
-    Рассмотрите, какие действия `OnAppearing` выполняет код.
+    Подумайте, что делает `OnAppearing` код.
 
-    - URL-адрес, который будет вызываться — это `/v1.0/me/events`.
-    - `Select` Функция ограничит поля, возвращаемые для каждого события, только теми, которые будут реально использоваться в представлении.
-    - `OrderBy` Функция сортирует результаты по дате и времени создания, начиная с самого последнего элемента.
+    - Будет вызван URL-адрес `/v1.0/me/calendarview` .
+        - Параметры `startDateTime` `endDateTime` и параметров определяют начало и конец представления календаря.
+        - Заглавная часть приводит к возвращению событий в часовом поясе `Prefer: outlook.timezone` `start` `end` пользователя.
+        - Функция ограничивает поля, возвращаемые для каждого события, только теми, которые будут `Select` фактически использовать приложение.
+        - Функция `OrderBy` сортировать результаты по дате и времени начала.
+        - Функция `Top` запрашивает не более 50 событий.
 
-1. Запустите приложение и войдите в него, а затем щелкните элемент Навигация в **календаре** в меню. Вы должны увидеть дамп событий в календаре пользователя.
+1. Запустите приложение, войдите в  систему и щелкните элемент навигации "Календарь" в меню. Вы увидите дамп событий в JSON в календаре пользователя.
 
 ## <a name="display-the-results"></a>Отображение результатов
 
-Теперь вы можете заменить дамп JSON на какой-то способ отобразить результаты в удобном для пользователя виде.
+Теперь вы можете заменить дамп JSON на что-то, чтобы отобразить результаты в удобном для пользователя виде.
 
-Сначала создайте [преобразователь значений привязки](/xamarin/xamarin-forms/xaml/xaml-basics/data-binding-basics#binding-value-converters) , чтобы преобразовать значения [dateTimeTimeZone](/graph/api/resources/datetimetimezone?view=graph-rest-1.0) , возвращенные Microsoft Graph, в форматы даты и времени, которые ожидает пользователь.
+Для начала [](/xamarin/xamarin-forms/xaml/xaml-basics/data-binding-basics#binding-value-converters) создайте конвертер значений привязки, чтобы преобразовать значения [dateTimeTimeZone,](/graph/api/resources/datetimetimezone?view=graph-rest-1.0) возвращаемого Microsoft Graph, в форматы даты и времени, которые ожидает пользователь.
 
-1. Щелкните правой кнопкой мыши папку **Models** в проекте **графтуториал** и выберите команду **добавить**, а затем — **класс...**. Назовите класс `GraphDateTimeTimeZoneConverter` и нажмите кнопку **Добавить**.
+1. Щелкните правой **кнопкой мыши** папку Models в **проекте GraphTutorial** и выберите **"Добавить"** и **"Класс...".** Назовем класс `GraphDateTimeTimeZoneConverter` и выберите **"Добавить".**
 
-1. Замените все содержимое файла на приведенный ниже код.
+1. Замените все содержимое файла на следующее:
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphTutorial/Models/GraphDateTimeTimeZoneConverter.cs" id="DateTimeConverterSnippet":::
 
-1. Замените все содержимое файла **календарпаже. XAML** следующим кодом:
+1. Замените все содержимое **CalendarPage.xaml** следующим:
 
-    :::code language="xaml" source="../demo/GraphTutorial/GraphTutorial/CalendarPage.xaml":::
+    :::code language="xaml" source="../demo/GraphTutorial/GraphTutorial/CalendarPage.xaml" id="CalendarPageXamlSnippet":::
 
-    Вместо него `Editor` заменяется `ListView`. Объект `DataTemplate` , используемый для отображения каждого элемента, `GraphDateTimeTimeZoneConverter` использует для преобразования `Start` свойства `End` и свойства события в строку.
+    Он заменяется `Editor` на `ListView` .. Для отображения каждого элемента используется преобразование свойств события `DataTemplate` `GraphDateTimeTimeZoneConverter` в `Start` `End` строку.
 
-1. Откройте **CalendarPage.XAML.CS** и удалите из `OnAppearing` функции следующие строки.
+1. Откройте **CalendarPage.xaml.cs** и удалите из функции следующие `OnAppearing` строки.
 
     ```csharp
     // Temporary
     JSONResponse.Text = JsonConvert.SerializeObject(events.CurrentPage, Formatting.Indented);
     ```
 
-1. Вместо этого добавьте следующий код.
+1. На их месте добавьте следующий код.
 
     ```csharp
     // Add the events to the list view
     CalendarList.ItemsSource = events.CurrentPage.ToList();
     ```
 
-1. Запустите приложение и войдите в систему, а затем щелкните элемент навигации по **календарю** . Вы должны увидеть список событий с отформатированными **начальным** и **конечным** значениями.
+1. Запустите приложение, войдите в систему и щелкните элемент **навигации календаря.** Должен отформатирован список событий со значениями **start** и **End.**
 
     ![Снимок экрана с таблицей событий](./images/calendar-page.png)

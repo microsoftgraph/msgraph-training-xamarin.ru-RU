@@ -1,45 +1,47 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-1. Откройте Visual Studio и выберите **создать новый проект**.
+1. Откройте Visual Studio и выберите **"Создать новый проект".**
 
-1. В диалоговом окне **Создание нового проекта** выберите **мобильные приложения (Xamarin. Forms)**, а затем нажмите кнопку **Далее**.
+1. В **диалоговом окке** "Создание нового проекта" выберите мобильное **приложение (Xamarin.Forms)** и выберите **"Далее".**
 
-    ![Visual Studio 2019 диалоговое окно создания нового проекта](images/new-project-dialog.png)
+    ![Visual Studio 2019 г. диалоговое окно создания проекта](images/new-project-dialog.png)
 
-1. В диалоговом окне **Настройка нового проекта** введите `GraphTutorial` **имя проекта** и **имя решения**, а затем нажмите кнопку **создать**.
+1. В **диалоговом окке** "Настройка нового проекта" введите имя проекта и имя решения, а `GraphTutorial` затем выберите **"Создать".**  
 
     > [!IMPORTANT]
-    > Убедитесь, что вы вводите точно такое же имя для проекта Visual Studio, которое указано в этих инструкциях лаборатории. Имя проекта Visual Studio становится частью пространства имен в коде. Код в этих инструкциях зависит от пространства имен, которое соответствует имени проекта Visual Studio, указанного в данных инструкциях. Если вы используете другое имя проекта, код не будет компилироваться, если не настроить все пространства имен в качестве имени проекта Visual Studio, вводимого при создании проекта.
+    > Убедитесь, что введите точно такое же имя для Visual Studio Project, которое указано в этих лабораторных инструкциях. Имя Visual Studio проекта становится частью пространства имен в коде. Код в этих инструкциях зависит от пространства имен, совпадающих Visual Studio имени проекта, указанного в этих инструкциях. Если используется другое имя проекта, код не будет компилироваться, если не настроить все пространства имен в соответствие с именем Visual Studio проекта, которое вы вводите при создании проекта.
 
-    ![Visual Studio 2019 Настройка диалогового окна "создать проект"](images/configure-new-project-dialog.png)
+    ![Visual Studio 2019 г. диалоговое окно "Настройка нового проекта"](images/configure-new-project-dialog.png)
 
-1. В диалоговом окне **Создание многоплатформенного приложения** выберите **пустой** шаблон и выберите платформы, которые необходимо создать на **платформе**. Нажмите кнопку **ОК** , чтобы создать решение.
+1. В **диалоговом** окте "Создание кроссплатформенного приложения" выберите пустой шаблон и выберите платформы, которые вы хотите создать в **рамках платформ.**  Выберите **"ОК",** чтобы создать решение.
 
-    ![Диалоговое окно Visual Studio 2019 New Cross Platform App](images/new-cross-platform-app-dialog.png)
+    ![Visual Studio 2019: новое кроссплатформечное приложение](images/new-cross-platform-app-dialog.png)
 
 ## <a name="install-packages"></a>Установка пакетов
 
-Прежде чем переходить, установите некоторые дополнительные пакеты NuGet, которые будут использоваться позже.
+Прежде чем двигаться дальше, установите некоторые дополнительные пакеты NuGet, которые вы будете использовать позже.
 
-- [Microsoft. Identity. Client](https://www.nuget.org/packages/Microsoft.Identity.Client/) для обработки проверки подлинности и управления маркерами Azure AD.
-- [Microsoft. Graph](https://www.nuget.org/packages/Microsoft.Graph/) для совершения вызовов в Microsoft Graph.
+- [Microsoft.Identity.Client для](https://www.nuget.org/packages/Microsoft.Identity.Client/) обработки проверки подлинности Azure AD и управления маркерами.
+- [Microsoft.Graph](https://www.nuget.org/packages/Microsoft.Graph/) для вызовов Microsoft Graph.
+- [TimeZoneConverter](https://www.nuget.org/packages/TimeZoneConverter/) для обработки часовых поясов на разных платформах.
 
-1. Выберите **инструменты > диспетчер пакетов NuGet > консоли диспетчера пакетов**.
+1. Select **Tools > NuGet диспетчер пакетов > диспетчер пакетов Console**.
 
-1. В консоли диспетчера пакетов введите указанные ниже команды.
+1. В консоли диспетчер пакетов введите следующие команды.
 
     ```Powershell
-    Install-Package Microsoft.Identity.Client -Version 4.10.0 -Project GraphTutorial
-    Install-Package Microsoft.Identity.Client -Version 4.10.0 -Project GraphTutorial.Android
-    Install-Package Microsoft.Identity.Client -Version 4.10.0 -Project GraphTutorial.iOS
-    Install-Package Microsoft.Graph -Version 3.0.1 -Project GraphTutorial
+    Install-Package Microsoft.Identity.Client -Version 4.24.0 -Project GraphTutorial
+    Install-Package Microsoft.Identity.Client -Version 4.24.0 -Project GraphTutorial.Android
+    Install-Package Microsoft.Identity.Client -Version 4.24.0 -Project GraphTutorial.iOS
+    Install-Package Microsoft.Graph -Version 3.21.0 -Project GraphTutorial
+    Install-Package TimeZoneConverter -Version 3.3.0 -Project GraphTutorial
     ```
 
 ## <a name="design-the-app"></a>Проектирование приложения
 
-Сначала обновите `App` класс, чтобы добавить переменные для отслеживания состояния проверки подлинности и вошедшего пользователя.
+Для начала обновив класс, добавьте переменные для отслеживания состояния проверки подлинности и пользователя, выписав `App` его.
 
-1. В **обозревателе решений**разверните проект **графтуториал** , а затем разверните файл **app. XAML** . Откройте файл **app.XAML.CS** и добавьте приведенные ниже `using` операторы в начало файла.
+1. В **обозревателе решений** разорвем **проект GraphTutorial,** а затем разорвем **файл App.xaml.** Откройте файл **App.xaml.cs** и добавьте следующие утверждения в `using` верхнюю часть файла.
 
     ```csharp
     using System.ComponentModel;
@@ -48,17 +50,17 @@
     using System.Threading.Tasks;
     ```
 
-1. Добавьте `INotifyPropertyChanged` интерфейс к объявлению класса.
+1. Добавьте интерфейс `INotifyPropertyChanged` в объявление класса.
 
     ```csharp
     public partial class App : Application, INotifyPropertyChanged
     ```
 
-1. Добавьте в `App` класс указанные ниже свойства.
+1. Добавьте в класс следующие `App` свойства.
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphTutorial/App.xaml.cs" id="GlobalPropertiesSnippet":::
 
-1. Добавьте в `App` класс следующие функции. Функции `SignIn`, `SignOut`и, `GetUserInfo` а также — это просто заполнители.
+1. Добавьте в класс следующие `App` функции. На данный момент функции и функции `SignIn` `SignOut` являются просто `GetUserInfo` замесятелями.
 
     ```csharp
     public async Task SignIn()
@@ -90,69 +92,71 @@
     }
     ```
 
-1. `GetUserPhoto` Функция возвращает фотографию, используемую по умолчанию. Вы можете указать собственный файл или скачать его, который использовался в примере, на сайте [GitHub](https://github.com/microsoftgraph/msgraph-training-xamarin/blob/master/tutorial/images/no-profile-pic.png). Если вы используете свой файл, переименуйте его в **но-профиле-пик. png**.
+1. На `GetUserPhoto` данный момент функция возвращает фотографию по умолчанию. Вы можете предоставить собственный файл или скачать файл, используемый в примере, с [GitHub.](https://github.com/microsoftgraph/msgraph-training-xamarin/blob/master/tutorial/images/no-profile-pic.png) При использовании собственного файла переименуйте его в **no-profile-pic.png.**
 
-1. Скопируйте файл в каталог **./графтуториал/графтуториал** .
+1. Скопируйте файл в **каталог ./GraphTutorial/GraphTutorial.**
 
-1. Щелкните правой кнопкой мыши файл в **обозревателе решений** и выберите пункт **свойства**. В окне **Свойства** измените значение **действия при построении** на **внедренный ресурс**.
+1. Щелкните правой кнопкой мыши файл в **обозревателе решений** и выберите **"Свойства".** В **окне "Свойства"** измените значение действия сборки **на** **внедренный ресурс.**
 
-    ![Снимок экрана: окно "Свойства" для PNG-файла](./images/png-file-properties.png)
+    ![Снимок экрана: окно "Свойства" для файла PNG](./images/png-file-properties.png)
 
-### <a name="app-navigation"></a>Навигация в приложении
+### <a name="app-navigation"></a>Навигация по приложениям
 
-В этом разделе показано, как изменить основную страницу приложения на [страницу с основными и подробными данными](/xamarin/xamarin-forms/app-fundamentals/navigation/master-detail-page). Откроется меню навигации, чтобы переключиться между представлениями в приложении.
+В этом разделе вы измените главную страницу приложения на главную [страницу с подробными данными.](/xamarin/xamarin-forms/app-fundamentals/navigation/master-detail-page) При этом будет доступно меню навигации для переключения между представлениями в приложении.
 
-1. Откройте файл **MainPage. XAML** в проекте **графтуториал** и замените его содержимое приведенным ниже кодом.
+1. Откройте файл **MainPage.xaml** в проекте **GraphTutorial** и замените его содержимое на следующее.
 
-    :::code language="xaml" source="../demo/GraphTutorial/GraphTutorial/MainPage.xaml":::
+    :::code language="xaml" source="../demo/GraphTutorial/GraphTutorial/MainPage.xaml" id="MainPageXamlSnippet":::
 
 #### <a name="implement-the-menu"></a>Реализация меню
 
-1. Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **Новая папка**. Назовите папку `Models`.
+1. Щелкните правой кнопкой мыши проект **GraphTutorial** и выберите **"Добавить"** и "Новая **папка".** Назовем `Models` папку.
 
-1. Щелкните правой кнопкой мыши папку **Models** и выберите команду **Добавить**, а затем — **класс...**. Назовите класс `NavMenuItem` и нажмите кнопку **Добавить**.
+1. Щелкните правой **кнопкой мыши** папку Models и выберите **"Добавить",** затем **"Класс"...** Назовем класс `NavMenuItem` и выберите **"Добавить".**
 
-1. Откройте файл **NavMenuItem.CS** и замените его содержимое на приведенный ниже код.
+1. Откройте файл **NavMenuItem.cs** и замените его содержимое на следующий файл.
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphTutorial/Models/NavMenuItem.cs" id="NavMenuItemSnippet":::
 
-1. Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **новый элемент...**. Выберите **страницу содержимого** и присвойте странице `MenuPage`имя. Нажмите кнопку **Добавить**.
+1. Щелкните правой кнопкой мыши проект **GraphTutorial** и выберите **"Добавить"** и **"Новый элемент"...** Choose **Content Page** and name the page `MenuPage` . Нажмите кнопку **Добавить**.
 
-1. Откройте файл **менупаже. XAML** и замените его содержимое приведенным ниже кодом.
+1. Откройте файл **MenuPage.xaml** и замените его содержимое на следующее.
 
-    :::code language="xaml" source="../demo/GraphTutorial/GraphTutorial/MenuPage.xaml":::
+    :::code language="xaml" source="../demo/GraphTutorial/GraphTutorial/MenuPage.xaml" id="MenuPageXamlSnippet":::
 
-1. Разверните **менупаже. XAML** в **обозревателе решений** и откройте файл **MenuPage.XAML.CS** . Замените его содержимое приведенным ниже.
+1. **Разкрой файл MenuPage.xaml** **в** обозревателе решений и откройте **MenuPage.xaml.cs** файла. Замените его содержимое на следующее.
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphTutorial/MenuPage.xaml.cs" id="MenuPageSnippet":::
 
     > [!NOTE]
-    > Visual Studio сообщит об ошибках в **MenuPage.XAML.CS**. Эти ошибки будут устранены на более позднем этапе.
+    > Visual Studio будет сообщать об ошибках **в** MenuPage.xaml.cs. Эти ошибки будут устранены на более позднем этапе.
 
 #### <a name="implement-the-welcome-page"></a>Реализация страницы приветствия
 
-1. Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **новый элемент...**. Выберите **страницу содержимого** и присвойте странице `WelcomePage`имя. Нажмите кнопку **Добавить**. Откройте файл **велкомепаже. XAML** и замените его содержимое приведенным ниже кодом.
+1. Щелкните правой кнопкой мыши проект **GraphTutorial** и выберите **"Добавить"** и **"Новый элемент"...** Choose **Content Page** and name the page `WelcomePage` . Нажмите кнопку **Добавить**. Откройте файл **WelcomePage.xaml** и замените его содержимое на следующее.
 
-    :::code language="xaml" source="../demo/GraphTutorial/GraphTutorial/WelcomePage.xaml":::
+    :::code language="xaml" source="../demo/GraphTutorial/GraphTutorial/WelcomePage.xaml" id="WelcomePageXamlSnippet":::
 
-1. Разверните **велкомепаже. XAML** в **обозревателе решений** и откройте файл **WelcomePage.XAML.CS** . Добавьте к классу `WelcomePage` следующую функцию:
+1. **Разкрой файл WelcomePage.xaml** в **обозревателе** решений и откройте **WelcomePage.xaml.cs** файла. Добавьте к классу `WelcomePage` следующую функцию:
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphTutorial/WelcomePage.xaml.cs" id="OnSignInSnippet":::
 
-#### <a name="add-calendar-page"></a>Страница "Добавление календаря"
+#### <a name="add-calendar-and-new-event-pages"></a>Добавление календаря и новых страниц событий
 
-Теперь добавьте страницу "Календарь". Это будет просто заполнитель.
+Теперь добавьте страницу календаря и новую страницу событий. На данный момент они будут просто замесятелями.
 
-1. Щелкните правой кнопкой мыши проект **графтуториал** и выберите команду **Добавить**, а затем — **новый элемент...**. Выберите **страницу содержимого** и присвойте странице `CalendarPage`имя. Нажмите кнопку **Добавить**.
+1. Щелкните правой кнопкой мыши проект **GraphTutorial** и выберите **"Добавить"** и **"Новый элемент"...** Choose **Content Page** and name the page `CalendarPage` . Нажмите кнопку **Добавить**.
 
-#### <a name="update-mainpage-code-behind"></a>Обновление кода MainPage
+1. Щелкните правой кнопкой мыши проект **GraphTutorial** и выберите **"Добавить"** и **"Новый элемент"...** Choose **Content Page** and name the page `NewEventPage` . Нажмите кнопку **Добавить**.
 
-Теперь, когда все страницы находятся на месте, обновите код программной части для **MainPage. XAML**.
+#### <a name="update-mainpage-code-behind"></a>Обновление кода программной области MainPage
 
-1. Разверните **MainPage. XAML** в **обозревателе решений** и откройте файл **MainPage.XAML.CS** и замените все содержимое приведенным ниже кодом.
+Теперь, когда все страницы на месте, обновите код программной части **для MainPage.xaml.**
+
+1. Разместив **файл MainPage.xaml** в обозревателе решений, откройте файл MainPage.xaml.cs и замените его все содержимое на следующее.  
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphTutorial/MainPage.xaml.cs" id="MainPageSnippet":::
 
-1. Сохраните все изменения. Щелкните правой кнопкой мыши проект, который требуется запустить (Android, iOS или UWP), и выберите пункт **Назначить запускаемым проектом**. Нажмите клавишу **F5** или выберите **Отладка > начать отладку** в Visual Studio.
+1. Сохраните все изменения. Щелкните правой кнопкой мыши проект, который вы хотите запустить (Android, iOS или UWP), и выберите "Установить в качестве **startUp Project".** Нажмите **F5** или выберите **"Отладка> начать отладку** в Visual Studio.
 
-    ![Снимки экрана с версиями приложения для Android, iOS и UWP](./images/welcome-page.png)
+    ![Снимки экрана версий приложения для Android, iOS и UWP](./images/welcome-page.png)
