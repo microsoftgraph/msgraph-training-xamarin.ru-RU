@@ -23,7 +23,7 @@
     </ContentPage>
     ```
 
-1. Откройте **CalendarPage.xaml.cs** и добавьте следующие `using` утверждения в верхней части файла.
+1. Откройте **CalendarPage.xaml.cs** и добавьте следующие утверждения в `using` верхней части файла.
 
     ```csharp
     using Microsoft.Graph;
@@ -32,7 +32,11 @@
     using System.ComponentModel;
     ```
 
-1. Добавьте в класс следующую функцию, чтобы получить события пользователя и `CalendarPage` отобразить ответ JSON.
+1. Добавьте в класс следующую функцию, чтобы получить начало текущей недели `CalendarPage` в часовом поясе пользователя.
+
+    :::code language="csharp" source="../demo/GraphTutorial/GraphTutorial/CalendarPage.xaml.cs" id="GetStartOfWeekSnippet":::
+
+1. Добавьте в класс следующую функцию, чтобы получить события пользователя и отобразить `CalendarPage` ответ JSON.
 
     ```csharp
     protected override async void OnAppearing()
@@ -73,7 +77,7 @@
     - Будет вызван URL-адрес `/v1.0/me/calendarview` .
         - Параметры `startDateTime` `endDateTime` и параметров определяют начало и конец представления календаря.
         - Заглавная часть приводит к возвращению событий в часовом поясе `Prefer: outlook.timezone` `start` `end` пользователя.
-        - Функция ограничивает поля, возвращаемые для каждого события, только теми, которые будут `Select` фактически использовать приложение.
+        - Функция `Select` ограничивает поля, возвращаемые для каждого события, только теми, которые будут фактически использовать приложение.
         - Функция `OrderBy` сортировать результаты по дате и времени начала.
         - Функция `Top` запрашивает не более 50 событий.
 
@@ -83,9 +87,9 @@
 
 Теперь вы можете заменить дамп JSON на что-то, чтобы отобразить результаты в удобном для пользователя виде.
 
-Для начала [](/xamarin/xamarin-forms/xaml/xaml-basics/data-binding-basics#binding-value-converters) создайте конвертер значений привязки, чтобы преобразовать значения [dateTimeTimeZone,](/graph/api/resources/datetimetimezone?view=graph-rest-1.0) возвращаемого Microsoft Graph, в форматы даты и времени, которые ожидает пользователь.
+Для начала [](/xamarin/xamarin-forms/xaml/xaml-basics/data-binding-basics#binding-value-converters) создайте конвертер значений привязки, чтобы преобразовать значения [dateTimeTimeZone,](/graph/api/resources/datetimetimezone?view=graph-rest-1.0) возвращенные Microsoft Graph, в форматы даты и времени, которые ожидает пользователь.
 
-1. Щелкните правой **кнопкой мыши** папку Models в **проекте GraphTutorial** и выберите **"Добавить"** и **"Класс...".** Назовем класс `GraphDateTimeTimeZoneConverter` и выберите **"Добавить".**
+1. Щелкните правой **кнопкой мыши** папку Models в проекте **GraphTutorial** и выберите **"Добавить",** затем **"Класс"...** Назовем класс `GraphDateTimeTimeZoneConverter` и выберите **"Добавить".**
 
 1. Замените все содержимое файла на следующее:
 
