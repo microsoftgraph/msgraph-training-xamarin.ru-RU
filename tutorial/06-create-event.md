@@ -2,17 +2,18 @@
 
 В этом разделе вы добавим возможность создания событий в календаре пользователя.
 
-1. Добавьте новую страницу для нового представления событий. Щелкните правой кнопкой мыши проект **GraphTutorial** в обозревателе решений и **выберите "Добавить > Новый элемент...".** Выберите **пустую страницу,** `NewEventPage.xaml` введите в поле **"Имя"** и выберите **"Добавить".**
+1. Откройте **NewEventPage.xaml** и замените его содержимое следующим.
 
-1. Откройте **NewEventPage.xaml** и замените его содержимое на следующее.
-
-    :::code language="xaml" source="../demo/GraphTutorial/GraphTutorial/NewEventPage.xaml" id="NewEventPageXamlSnippet":::
+    :::code language="xaml" source="../demo/GraphTutorial/GraphTutorial/NewEventPage.xaml":::
 
 1. Откройте **NewEventPage.xaml.cs** и добавьте следующие утверждения в `using` верхнюю часть файла.
 
-    :::code language="csharp" source="../demo/GraphTutorial/GraphTutorial/NewEventPage.xaml.cs" id="UsingStatementsSnippet":::
+    ```csharp
+    using System.ComponentModel;
+    using Microsoft.Graph;
+    ```
 
-1. Добавьте интерфейс **INotifyPropertyChange** в **класс NewEventPage.** Замените существующее объявление класса на следующее.
+1. Добавьте интерфейс **INotifyPropertyChange** в **класс NewEventPage.** Замените существующее объявление класса следующим.
 
     ```csharp
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -34,6 +35,6 @@
 
     :::code language="csharp" source="../demo/GraphTutorial/GraphTutorial/NewEventPage.xaml.cs" id="CreateEventSnippet":::
 
-1. Сохраните изменения и запустите приложение. Во sign in, select the **New event** menu item, fill in the form, and select **Create** to add an event to the user's calendar.
+1. Сохраните изменения и запустите приложение. Во входе выберите элемент **меню "Новое** событие", заполните форму и выберите **Создать,** чтобы добавить событие в календарь пользователя.
 
-    ![Снимок экрана: новая страница события](images/new-event-page.png)
+    ![Снимок экрана новой страницы события](images/new-event-page.png)
