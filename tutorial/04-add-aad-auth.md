@@ -6,7 +6,7 @@
 
 1. Откройте **файл OAuthSettings.cs** и замените его содержимое следующим.
 
-    :::code language="csharp" source="../demo/GraphTutorial/GraphTutorial/Models/OAuthSettings.cs.example":::
+    :::code language="csharp" source="../demo/GraphTutorial/GraphTutorial/Models/OAuthSettings.example.cs":::
 
 1. Замените `YOUR_APP_ID_HERE` с помощью ID приложения из регистрации приложения.
 
